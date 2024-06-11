@@ -1,31 +1,27 @@
-"use client";
+import React from "react";
 import "aos/dist/aos.css";
-import { useEffect } from "react";
-import AOS from "aos";
-import Products from "./components/Products";
+import { Card } from "@/components/ui/card";
+import { ModeToggle } from "./components/MoodToogle";
+import Navbar from "./components/Navbar";
+import { Separator } from "@/components/ui/separator";
+import { Button } from "@/components/ui/button";
 
 function MyApp() {
-  useEffect(() => {
-    AOS.init({
-      offset: 100,
-      delay: 100,
-      duration: 800,
-      easing: "ease-in-sine",
-      once: false,
-      mirror: false,
-      anchorPlacement: "top-bottom",
-    });
-    AOS.refresh();
-  }, []);
-
   return (
     <div>
-      <p data-aos="fade-up">
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Perferendis,
-        labore tempora magni dicta sunt fugit alias vero, sit et nesciunt enim
-        laudantium, id iste numquam voluptatem sed. Placeat, dolorem dolorum?
+      <p>
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ipsa atque
+        provident officiis eaque non a, harum placeat recusandae totam similique
+        dignissimos odio earum saepe blanditiis obcaecati, perspiciatis
+        deleniti? Ipsam, fugiat!
       </p>
-      <Products />
+      <Separator />
+      <Button>click me</Button>
+      <Card className="w-[60%] mx-auto">
+        <Navbar />
+
+        <ModeToggle />
+      </Card>
     </div>
   );
 }

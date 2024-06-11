@@ -1,12 +1,16 @@
 import React from "react";
 
 import type { Metadata } from "next";
-import { Inter as FontSans } from "next/font/google";
+import { Poppins } from "next/font/google";
 import "./globals.css";
+import { cn } from "@/lib/utils";
+import { ThemeProvider } from "@/components/theme-provider";
 
-const inter = FontSans({
+const pop = Poppins({
+  weight: ["400", "500"],
   subsets: ["latin"],
-  variable: "--font-sans",
+  variable: "--poppin",
+  style: ["normal"],
 });
 
 export const metadata: Metadata = {
@@ -20,8 +24,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${inter.variable} font-sans`}>{children}</body>
+    <html lang="en" suppressHydrationWarning={true}>
+      <body className={`${cn(pop.className)}`}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+        </ThemeProvider>
+      </body>
     </html>
   );
 }
