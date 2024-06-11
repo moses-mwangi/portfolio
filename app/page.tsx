@@ -9,19 +9,7 @@ import { Button } from "@/components/ui/button";
 function MyApp() {
   return (
     <div>
-      <p>
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ipsa atque
-        provident officiis eaque non a, harum placeat recusandae totam similique
-        dignissimos odio earum saepe blanditiis obcaecati, perspiciatis
-        deleniti? Ipsam, fugiat!
-      </p>
-      <Separator />
-      <Button>click me</Button>
-      <Card className="w-[60%] mx-auto">
-        <Navbar />
-
-        <ModeToggle />
-      </Card>
+      <h1>moses</h1>
     </div>
   );
 }
