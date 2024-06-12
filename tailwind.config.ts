@@ -3,10 +3,13 @@ import type { Config } from "tailwindcss";
 const config = {
   darkMode: ["class"],
   content: [
-    "./pages/**/*.{ts,tsx}",
-    "./components/**/*.{ts,tsx}",
+    // "./pages/**/*.{ts,tsx}",
+    // "./components/**/*.{ts,tsx}",
     "./app/**/*.{ts,tsx}",
     "./src/**/*.{ts,tsx}",
+
+    "./pages/**/*.{js,ts,jsx,tsx}",
+    "./components/**/*.{js,ts,jsx,tsx}",
   ],
   prefix: "",
   theme: {
@@ -24,7 +27,11 @@ const config = {
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
-        text: "hsl(var(--text))",
+        lightGreen: "hsl(var(--light-green))",
+        slate: "hsl(var(--slate))",
+        light_slate: "hsl(var(--light-slate))",
+        lightest_slate: "hsl(var(--lightest-slate))",
+        animate_text: "hsl(var(--animate-text))",
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
@@ -72,6 +79,13 @@ const config = {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+      },
+      writingMode: {
+        "vertical-rl": "vertical-rl",
+      },
+      backgroundImage: {
+        "do-parallax": "url('/img/hero-pattern.svg')",
+        "service-paralax": "url('/img/footer-texture.png')",
       },
     },
   },

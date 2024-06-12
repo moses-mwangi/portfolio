@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/theme-provider";
 
 const pop = Poppins({
-  weight: ["400", "500"],
+  weight: ["400", "500", "300"],
   subsets: ["latin"],
   variable: "--poppin",
   style: ["normal"],
