@@ -1,8 +1,11 @@
 import React from "react";
 import "aos/dist/aos.css";
-import Navbar from "./components/Navbar";
-import HeroSection from "./components/heroSection/HeroSection";
+import Navbar from "./components/home/Navbar";
+import HeroSection from "./components/home/HeroSection";
 import About from "./components/about/About";
+import MyWorked from "./components/projects.tsx/MyWorked";
+import Contact from "./components/contact/Contact";
+import Skills from "./components/skills/Skills";
 
 function MyApp() {
   return (
@@ -10,6 +13,9 @@ function MyApp() {
       <Navbar />
       <HeroSection />
       <About />
+      {/* <Skills /> */}
+      <MyWorked />
+      <Contact />
     </div>
   );
 }

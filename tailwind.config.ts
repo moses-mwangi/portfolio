@@ -28,6 +28,7 @@ const config = {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         lightGreen: "hsl(var(--light-green))",
+        deep_green: "hsl(var(--deep-green))",
         slate: "hsl(var(--slate))",
         light_slate: "hsl(var(--light-slate))",
         lightest_slate: "hsl(var(--lightest-slate))",
