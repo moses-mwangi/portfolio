@@ -11,7 +11,7 @@ const play = Playfair_Display({
 
 export default function Navbar() {
   return (
-    <nav className=" flex justify-between items-center px-12 py-5 shadow-xl">
+    <nav className=" hidden md:flex md:justify-between md:items-center md:px-12 md:py-5 md:shadow-xl">
       <div className="">
         <h1 className=" text-2xl font-medium">M</h1>
       </div>

@@ -22,7 +22,7 @@ const play = Playfair_Display({
 
 export default function Contact() {
   return (
-    <div className=" w-[80%] mx-auto mt-28 mb-60">
+    <div className=" w-[80%] mx-auto mt-28 mb-52">
       <div className="flex gap-3 items-center justify-center mb-16">
         <span className=" h-[1px] w-[200px] bg-gray-700 block" />
         <p className=" text-3xl font-[500]">

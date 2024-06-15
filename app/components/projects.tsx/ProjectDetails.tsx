@@ -2,27 +2,60 @@
 
 import { Separator } from "@/components/ui/separator";
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
-import {
-  ArrowRightIcon,
-  ArrowUpRightIcon,
-  ArrowUpRightSquareIcon,
-} from "lucide-react";
 import Link from "next/link";
 import React, { useState } from "react";
 import { RxExternalLink } from "react-icons/rx";
 
-export default function ProjectDetails() {
+import {
+  Tourney,
+  Barlow_Semi_Condensed as Libre_Baskerville,
+} from "next/font/google";
+import { cn } from "@/lib/utils";
+
+const tourney = Tourney({
+  weight: ["300"],
+  subsets: ["latin"],
+  variable: "--tourn",
+  style: ["normal"],
+});
+
+const serif = Libre_Baskerville({
+  weight: ["400", "500"],
+  subsets: ["latin"],
+  variable: "--tourn",
+  style: ["normal"],
+});
+
+export default function ProjectDetails({
+  number,
+  label,
+}: {
+  number: string;
+  label: string;
+}) {
   const [arrow, setArrow] = useState(true);
   return (
     <div>
       <div className=" flex flex-col gap-3 mb-4">
-        <span className=" text-[60px] font-bold text-slate">01</span>
-        <h1 className=" font-semibold text-2xl">FullStack Project</h1>
-        <p className=" text-slate">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis
-          impedit cupiditate alias
+        <span
+          className={`${cn(
+            tourney.className
+          )} text-[60px] font-bold text-slate`}
+        >
+          {number}
+        </span>
+        <h1 className=" font-semibold text-2xl">{label}</h1>
+        <p
+          className={`${cn(serif.className)} text-slate text-[17px] leading-5`}
+        >
+          A web app for visualizing personalized Spotify data. View your top
+          artists, top tracks, recently played tracks, and detailed audio
         </p>
-        <p className=" text-green-300 font-medium opacity-50 text-[13px]">
+        <p
+          className={`${cn(
+            serif.className
+          )} text-green-300 font-medium opacity-50 text-[13px]`}
+        >
           Next.js Tailwind Shadcn ui & Mysql
         </p>
       </div>

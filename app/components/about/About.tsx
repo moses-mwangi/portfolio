@@ -1,9 +1,18 @@
 import React from "react";
-
 import { PT_Serif as Playfair_Display } from "next/font/google";
-import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Skills from "./Skills";
+import { Barlow_Semi_Condensed as Barlow } from "next/font/google";
+import { cn } from "@/lib/utils";
+import TechStarck from "./TechStarck";
+
+const serif = Barlow({
+  weight: ["400", "500"],
+  subsets: ["latin"],
+  variable: "--barlow",
+  style: ["normal"],
+});
+
 const play = Playfair_Display({
   weight: ["400"],
   subsets: ["latin"],
@@ -30,7 +39,7 @@ export default function About() {
         </div>
       </div>
       <div className="grid sm:grid-cols-[1fr_auto] gap-10 ml-6 grid-cols-1">
-        <div className="flex flex-col gap-4">
+        <div className={`${cn(serif.className)} flex flex-col gap-4`}>
           <p className="text-slate">
             Hello! I’m Moses Mungai, a passionate and dedicated junior frontend
             developer with a keen eye for design and a love for crafting
@@ -51,7 +60,8 @@ export default function About() {
             turning ideas into reality through code, and I continuously seek to
             improve my skills and stay updated with the latest industry trends.
           </p>
-          <Skills />
+          <TechStarck />
+          {/* <Skills /> */}
         </div>
         <div className="relative rounded-sm border-[2px] border-solid border-lightGreen w-[292px] h-[292px]">
           <div className="relative w-72 h-72 -top-3 -left-3  transition-all duration-200 hover:translate-x-[-6px] hover:translate-y-[-6px]">

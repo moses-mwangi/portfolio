@@ -1,43 +1,31 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { motion } from "framer-motion";
+import "aos/dist/aos.css";
+import Aos from "aos";
 
-import Image from "next/image";
 export default function Home() {
+  useEffect(() => {
+    Aos.init({
+      offset: 100,
+      duration: 800,
+      once: false,
+      easing: "ease-in-sine",
+      delay: 100,
+    });
+
+    Aos.refresh();
+  }, []);
+
   return (
-    <div className=" ml-20 mt-20 relative rounded-sm border-[2px] border-solid border-lightGreen w-[292px] h-[292px]">
-      <div className="relative w-72 h-72 -top-3 -left-3  transition-all duration-200 hover:translate-x-[-6px] hover:translate-y-[-6px]">
-        <Image
-          className="object-cover w-full h-full rounded-sm"
-          src="/images/image.png"
-          alt="moses mwangi"
-          width={290}
-          height={290}
-          priority
-          quality={100}
-        />
-        <div className="absolute top-0 left-0 w-full rounded-sm h-full hover:opacity-0 bg-lightGreen transition-all duration-200 opacity-60"></div>
-      </div>
+    <div className=" w-[50vw]">
+      <h1 data-aos="fade-up">moses mesngi nene</h1>
+      <p data-aos="fade-left">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis magni iste
+        explicabo tempore, asperiores eveniet fugit, hic odit recusandae
+        consequuntur suscipit et fugiat, praesentium consectetur saepe vero
+        adipisci dignissimos obcaecati.
+      </p>
     </div>
   );
-}
-
-{
-  /* <div>
-<motion.circle
-  className=" bg-gray-50"
-  cx={300}
-  cy={300}
-  radius={300}
-  stroke="#000000"
-  strokeWidth={4}
-  strokeLinejoin="round"
-  strokeLinecap="round"
-  initial={{ strokeDasharray: "24 10 0 0" }}
-  animate={{
-    strokeDasharray: ["15 120 25 25", "16 25 92 72", "4 250 22 22"],
-    rotate: [120, 360],
-  }}
-/>
-</div> */
 }
