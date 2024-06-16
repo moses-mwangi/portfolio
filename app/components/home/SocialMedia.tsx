@@ -19,12 +19,12 @@ const social = [{ label: "GitHub" }, { label: "Linkedin" }];
 
 export default function SocialMedia() {
   return (
-    <div className=" fixed bottom-0 left-0 flex items-center flex-col gap-7 pl-12">
+    <div className=" md:fixed md:bottom-0 md:left-0 flex flex-row mb-12 items-center md:flex-col gap-5 md:gap-7 md:pl-12">
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger asChild>
             <Link
-              className="hover:text-deep_green hover:-translate-y-1 transition-all duration-200"
+              className="hover:text-white text-deep_green hover:-translate-y-1 transition-all duration-200"
               href="https://github.com/moses-mwangi/portfolio"
             >
               <GitHubLogoIcon className=" w-5 h-5" />
@@ -39,7 +39,7 @@ export default function SocialMedia() {
         <Tooltip>
           <TooltipTrigger asChild>
             <Link
-              className="hover:text-deep_green hover:-translate-y-1 transition-all duration-200"
+              className="hover:text-white text-deep_green hover:-translate-y-1 transition-all duration-200"
               href="https://www.linkedin.com/in/moses-mwangi-5b4ba6292/"
             >
               <LinkedinIcon className=" w-5 h-5" />
@@ -54,7 +54,7 @@ export default function SocialMedia() {
         <Tooltip>
           <TooltipTrigger asChild>
             <Link
-              className="hover:text-deep_green hover:-translate-y-1 transition-all duration-200"
+              className="hover:text-white text-deep_green hover:-translate-y-1 transition-all duration-200"
               href="/"
             >
               <RxPaperPlane />
@@ -69,11 +69,10 @@ export default function SocialMedia() {
         <Tooltip>
           <TooltipTrigger asChild>
             <Link
-              className="hover:text-deep_green hover:-translate-y-1 transition-all duration-200"
+              className="hover:text-white text-deep_green hover:-translate-y-1 transition-all duration-200"
               href="/"
             >
-              <FaPhoneVolume className=" w-5 h-5" />
-              {/* <InstagramLogoIcon className=" w-5 h-5" /> */}
+              <FaPhoneVolume className=" w-4 h-4" />
             </Link>
           </TooltipTrigger>
           <TooltipContent side="right">
@@ -81,7 +80,7 @@ export default function SocialMedia() {
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>
-      <span className=" w-[1px] h-[110px] bg-light_slate block" />
+      <span className=" hidden w-[1px] h-[110px] bg-light_slate md:block" />
     </div>
   );
 }

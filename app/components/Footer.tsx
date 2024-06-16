@@ -5,7 +5,7 @@ export default function Footer() {
   return (
     <Link
       href="https://github.com/moses-mwangi/portfolio"
-      className=" text-deep_green text-[14px] flex flex-col mb-10 justify-center items-center"
+      className=" text-deep_green text-[14px] flex flex-col mb-6 justify-center items-center"
     >
       <p>Design & Built by Moses Mungai</p>
       <p>7,284 3,556</p>

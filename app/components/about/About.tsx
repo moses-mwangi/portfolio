@@ -22,25 +22,27 @@ const play = Playfair_Display({
 
 export default function About() {
   return (
-    <div id="about" className=" w-[70%] mx-auto pt-32">
+    <div id="about" className=" md:w-[70%] mx-auto pt-24 md:pt-32">
       <div className=" mb-10 ml-6">
-        <div className="flex gap-3 items-center">
-          <p className=" text-4xl font-[500]">
+        <div className="flex gap-3 items-center pr-3">
+          <p className="text-2xl font-[600] whitespace-nowrap">
             <span
               className={`${cn(
                 play.className
-              )} text-xl font-light text-lightGreen`}
+              )} text-sm font-light text-lightGreen`}
             >
               02.
             </span>
             About Me
           </p>
-          <span className=" h-[1px] w-[300px] bg-gray-700 block" />
+          <span className=" h-[1px] w-full md:w-[300px] bg-gray-700 block" />
         </div>
       </div>
-      <div className="grid sm:grid-cols-[1fr_auto] gap-10 ml-6 grid-cols-1">
+      <div className="grid md:grid-cols-[auto_1fr] gap-10 ml-6 grid-cols-1">
         <div
-          className={`${cn(serif.className)} flex flex-col gap-4 text-[17px]`}
+          className={`${cn(
+            serif.className
+          )} flex flex-col gap-4 md:text-[17px]`}
         >
           <p className="text-slate">
             Hello! I’m Moses Mungai, a passionate and dedicated junior frontend
@@ -50,32 +52,35 @@ export default function About() {
             technologies.
           </p>
           <p className="text-slate">
-            When I’m not coding, you can find me [ [personal touch]insert
-            personal interests or hobbies, e.g. exploring new hiking
-            trails,playing the guitar or experimenting with new recipes in the
-            kitchen] . I believe that a healthy balance of work and play fuels
-            creativity and productivity.
-          </p>
-          <p className="text-slate">
             I began my coding journey with a fascination for how websites work
             and quickly fell in love with frontend development. I thrive on
             turning ideas into reality through code, and I continuously seek to
             improve my skills and stay updated with the latest industry trends.
           </p>
+          <p className="text-slate">
+            When I’m not coding, you can find me
+            <span className="pl-1 text-[15px] text-lightGreen">
+              exploring new hiking trails,playing the guitar, or experimenting
+              with new recipes in the kitchen
+            </span>
+            . I believe that a healthy balance of work and play fuels creativity
+            and productivity.
+          </p>
           <TechStarck />
           {/* <Skills /> */}
         </div>
         <div className="relative rounded-sm border-[2px] border-solid border-lightGreen w-[292px] h-[292px]">
-          <div className="relative w-72 h-72 -top-3 -left-3  transition-all duration-200 hover:translate-x-[-6px] hover:translate-y-[-6px]">
+          <div className="relative h-72 w-72 -top-3 -left-3  transition-all duration-200 hover:translate-x-[-6px] hover:translate-y-[-6px]">
             <Image
               className="object-cover w-full h-full rounded-sm"
               src="/images/JMN_6818.JPG"
               alt="moses mwangi"
-              width={290}
-              height={290}
+              width={600}
+              height={600}
               priority
               quality={100}
             />
+
             <div className="absolute top-0 left-0 w-full rounded-sm h-full hover:opacity-0 bg-lightGreen transition-all duration-200 opacity-35"></div>
           </div>
         </div>

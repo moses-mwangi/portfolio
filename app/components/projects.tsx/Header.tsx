@@ -13,18 +13,18 @@ export default function Header() {
   return (
     <div className=" mb-12 ml-6">
       <div className="flex gap-3 items-center justify-center">
-        <span className=" h-[1px] w-[200px] bg-gray-700 block" />
-        <p className=" text-4xl font-[600]">
+        <span className="hidden h-[1px] w-full bg-gray-700 md:block" />
+        <p className="text-2xl md:text-4xl font-[600] whitespace-nowrap">
           <span
             className={`${cn(
               play.className
-            )} text-xl font-light text-lightGreen`}
+            )} text-sm md:text-xl font-light text-lightGreen`}
           >
             04.
           </span>
           Some Things I’ve Built
         </p>
-        <span className=" h-[1px] w-[200px] bg-gray-700 block" />
+        <span className=" h-[1px] w-full bg-gray-700 block" />
       </div>
     </div>
   );

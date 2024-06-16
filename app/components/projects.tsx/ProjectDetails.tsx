@@ -40,13 +40,15 @@ export default function ProjectDetails({
         <span
           className={`${cn(
             tourney.className
-          )} text-[60px] font-bold text-slate`}
+          )} md:text-[60px] text-4xl font-bold text-slate`}
         >
           {number}
         </span>
-        <h1 className=" font-semibold text-2xl">{label}</h1>
+        <h1 className="font-semibold text-xl md:text-2xl">{label}</h1>
         <p
-          className={`${cn(serif.className)} text-slate text-[17px] leading-5`}
+          className={`${cn(
+            serif.className
+          )} text-slate md:text-[17px] leading-5`}
         >
           A web app for visualizing personalized Spotify data. View your top
           artists, top tracks, recently played tracks, and detailed audio
@@ -59,12 +61,11 @@ export default function ProjectDetails({
           Next.js Tailwind Shadcn ui & Mysql
         </p>
       </div>
-      <Separator />
+      <Separator className=" hidden md:block" />
       <div className="mt-4 flex flex-row gap-2 items-center">
         <Link href="/" className=" text-deep_green hover:text-white">
           <RxExternalLink className=" w-6 h-6" />
         </Link>
-
         <Link href="/" className=" text-deep_green hover:text-white">
           <GitHubLogoIcon className="w-6 h-6" />
         </Link>

@@ -63,7 +63,7 @@ export default function ContactForm() {
 
   return (
     <Card className="rounded-sm  bg-transparent">
-      <p className="flex justify-center mt-5 mb-8 text-[17px] font-medium">
+      <p className="flex justify-center mt-5 mb-8 md:text-[17px] font-medium">
         Let’s work together
       </p>
       <form

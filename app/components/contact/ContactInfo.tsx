@@ -24,11 +24,11 @@ const play = Playfair_Display({
 export default function ContactInfo() {
   return (
     <div className="flex flex-col gap-3">
-      <p className=" font-semibold text-2xl text-lightest_slate opacity-80 flex justify-center">
+      <p className=" font-semibold text-xl text-lightest_slate opacity-80 flex justify-center">
         Contact Me
       </p>
       <div className={`${cn(serif.className)}`}>
-        <h1 className=" font-[500] text-xl text-lightest_slate opacity-85">
+        <h1 className=" font-[500] text-[18px] md:text-xl text-lightest_slate opacity-85">
           Lets work together
         </h1>
         <p className="text-slate mt-3">
@@ -63,6 +63,3 @@ export default function ContactInfo() {
     </div>
   );
 }
-
-// className="hover:text-deep_green hover:-translate-y-1 transition-all duration-200"
-// href="https://www.linkedin.com/in/moses-mwangi-5b4ba6292/"
