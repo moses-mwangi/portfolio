@@ -11,7 +11,7 @@ const play = Playfair_Display({
 
 export default function Header() {
   return (
-    <div className=" mb-12 ml-6">
+    <div data-aos="fade-up" className=" mb-12 ml-6">
       <div className="flex gap-3 items-center justify-center">
         <span className="hidden h-[1px] w-full bg-gray-700 md:block" />
         <p className="text-2xl md:text-4xl font-[600] whitespace-nowrap">

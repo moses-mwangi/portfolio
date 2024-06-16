@@ -5,6 +5,8 @@ import Skills from "./Skills";
 import { Barlow_Semi_Condensed as Barlow } from "next/font/google";
 import { cn } from "@/lib/utils";
 import TechStarck from "./TechStarck";
+import Aos from "aos";
+import "aos/dist/aos.css";
 
 const serif = Barlow({
   weight: ["400", "500"],
@@ -24,7 +26,7 @@ export default function About() {
   return (
     <div id="about" className=" md:w-[70%] mx-auto pt-24 md:pt-32">
       <div className=" mb-10 ml-6">
-        <div className="flex gap-3 items-center pr-3">
+        <div data-aos="fade-up" className="flex gap-3 items-center pr-3">
           <p className="text-2xl font-[600] whitespace-nowrap">
             <span
               className={`${cn(
@@ -44,20 +46,20 @@ export default function About() {
             serif.className
           )} flex flex-col gap-4 md:text-[17px]`}
         >
-          <p className="text-slate">
+          <p data-aos="fade-up" className="text-slate">
             Hello! I’m Moses Mungai, a passionate and dedicated junior frontend
             developer with a keen eye for design and a love for crafting
             seamless user experiences. I specialize in creating responsive,
             user-friendly websites and applications using modern web
             technologies.
           </p>
-          <p className="text-slate">
+          <p data-aos="fade-up" className="text-slate">
             I began my coding journey with a fascination for how websites work
             and quickly fell in love with frontend development. I thrive on
             turning ideas into reality through code, and I continuously seek to
             improve my skills and stay updated with the latest industry trends.
           </p>
-          <p className="text-slate">
+          <p data-aos="fade-up" className="text-slate">
             When I’m not coding, you can find me
             <span className="pl-1 text-[15px] text-lightGreen">
               exploring new hiking trails,playing the guitar, or experimenting
@@ -69,7 +71,12 @@ export default function About() {
           <TechStarck />
           {/* <Skills /> */}
         </div>
-        <div className="relative rounded-sm border-[2px] border-solid border-lightGreen w-[292px] h-[292px]">
+        <div
+          data-aos="zoom-in"
+          data-aos-duration="1500"
+          data-aos-delay="200"
+          className="relative rounded-sm border-[2px] border-solid border-lightGreen w-[292px] h-[292px]"
+        >
           <div className="relative h-72 w-72 -top-3 -left-3  transition-all duration-200 hover:translate-x-[-6px] hover:translate-y-[-6px]">
             <Image
               className="object-cover w-full h-full rounded-sm"

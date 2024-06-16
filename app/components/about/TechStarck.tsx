@@ -13,10 +13,13 @@ const serif = Barlow({
 export default function TechStarck() {
   return (
     <div>
-      <p className=" font-[45px]">
+      <p data-aos="fade-up" className=" font-[45px]">
         Here are a few technologies I’ve been working with recently:
       </p>
-      <ul className="mb-4 mt-2 text-xl font-normal grid grid-cols-3 text-slate">
+      <ul
+        data-aos="fade-up"
+        className="mb-4 mt-2 text-xl font-normal grid grid-cols-3 text-slate"
+      >
         <li className={`${cn(serif.className)} flex items-center  gap-x-[6px]`}>
           <RxPlay className="w-3 h-3" color="#66ffdb" />
           <span className="text-[15px]">Javascript</span>

@@ -36,7 +36,7 @@ export default function ProjectDetails({
   const [arrow, setArrow] = useState(true);
   return (
     <div>
-      <div className=" flex flex-col gap-3 mb-4">
+      <div data-aos="fade-up" className=" flex flex-col gap-3 mb-4">
         <span
           className={`${cn(
             tourney.className
@@ -61,12 +61,20 @@ export default function ProjectDetails({
           Next.js Tailwind Shadcn ui & Mysql
         </p>
       </div>
-      <Separator className=" hidden md:block" />
+      <Separator className=" hidden md:block" data-aos="fade-up" />
       <div className="mt-4 flex flex-row gap-2 items-center">
-        <Link href="/" className=" text-deep_green hover:text-white">
+        <Link
+          data-aos="fade-right"
+          href="/"
+          className=" text-deep_green hover:text-white"
+        >
           <RxExternalLink className=" w-6 h-6" />
         </Link>
-        <Link href="/" className=" text-deep_green hover:text-white">
+        <Link
+          data-aos="fade-right"
+          href="/"
+          className=" text-deep_green hover:text-white"
+        >
           <GitHubLogoIcon className="w-6 h-6" />
         </Link>
       </div>

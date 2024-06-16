@@ -11,7 +11,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { CroissantIcon, LucideList } from "lucide-react";
+import { LucideList } from "lucide-react";
 
 const play = Playfair_Display({
   weight: ["400"],

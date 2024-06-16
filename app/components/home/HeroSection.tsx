@@ -7,6 +7,7 @@ import { Barlow_Semi_Condensed as Barlow } from "next/font/google";
 import { cn } from "@/lib/utils";
 import Aos from "aos";
 import "aos/dist/aos.css";
+import { Router } from "next/router";
 
 const serif = Barlow({
   weight: ["400", "500"],
@@ -26,14 +27,26 @@ export default function HeroSection() {
   // };
 
   useEffect(() => {
-    Aos.init({
-      offset: 100,
-      duration: 800,
-      easing: "ease-in-sine",
-      delay: 100,
-    });
+    if (typeof window !== "undefined") {
+      Aos.init({
+        startEvent: "DOMContentLoaded",
+        offset: 100,
+        duration: 800,
+        easing: "ease-in-sine",
+        delay: 100,
+        once: false,
+        disableMutationObserver: true,
+      });
 
-    Aos.refresh();
+      const handleRouteChange = () => {
+        Aos.refresh();
+      };
+
+      Router.events.on("routeChangeComplete", handleRouteChange);
+      return () => {
+        Router.events.off("routeChangeComplete", handleRouteChange);
+      };
+    }
   }, []);
 
   return (
@@ -43,7 +56,10 @@ export default function HeroSection() {
     >
       <div className="md:w-[80%] mx-auto">
         <div>
-          <h1 className=" text-lightGreen font-light md:mb-8">
+          <h1
+            data-aos="zoom-in"
+            className=" text-lightGreen font-light md:mb-8"
+          >
             Hi, my name is
           </h1>
           <p className=" text-4xl font-bold text-lightest_slate md:font-extrabold md:text-[56px] leading-normal mb-1">
