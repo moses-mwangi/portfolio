@@ -5,7 +5,7 @@ import Header from "./Header";
 
 export default function MyWorked() {
   return (
-    <div className=" w-[70%] mx-auto mt-32">
+    <div id="project" className=" w-[70%] mx-auto pt-28">
       <Header />
       <div className="grid md:grid-cols-2 grid-cols-1 gap-x-7 gap-y-14 items-center">
         <ProjectDetails number="01" label="FullStack Project" />

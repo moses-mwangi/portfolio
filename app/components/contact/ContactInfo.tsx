@@ -47,13 +47,22 @@ export default function ContactInfo() {
         </span>
       </div>
       <div className="flex gap-5">
-        <Link href="/" className="text-deep_green hover:text-white">
+        <Link
+          href="https://github.com/moses-mwangi/portfolio"
+          className="text-deep_green hover:text-white hover:-translate-y-1 transition-all duration-200"
+        >
           <GitHubLogoIcon className="w-7 h-7 border-2 border-solid border-deep_green rounded-full p-1" />
         </Link>
-        <Link href="/" className=" text-deep_green hover:text-white">
+        <Link
+          href="https://www.linkedin.com/in/moses-mwangi-5b4ba6292/"
+          className=" text-deep_green hover:text-white hover:-translate-y-1 transition-all duration-200"
+        >
           <LinkedInLogoIcon className="w-7 h-7 border-2 border-solid border-deep_green rounded-full p-1" />
         </Link>
       </div>
     </div>
   );
 }
+
+// className="hover:text-deep_green hover:-translate-y-1 transition-all duration-200"
+// href="https://www.linkedin.com/in/moses-mwangi-5b4ba6292/"

@@ -22,10 +22,10 @@ const play = Playfair_Display({
 
 export default function About() {
   return (
-    <div className=" w-[70%] mx-auto mt-28">
+    <div id="about" className=" w-[70%] mx-auto pt-32">
       <div className=" mb-10 ml-6">
         <div className="flex gap-3 items-center">
-          <p className=" text-3xl font-[500]">
+          <p className=" text-4xl font-[500]">
             <span
               className={`${cn(
                 play.className
@@ -39,7 +39,9 @@ export default function About() {
         </div>
       </div>
       <div className="grid sm:grid-cols-[1fr_auto] gap-10 ml-6 grid-cols-1">
-        <div className={`${cn(serif.className)} flex flex-col gap-4`}>
+        <div
+          className={`${cn(serif.className)} flex flex-col gap-4 text-[17px]`}
+        >
           <p className="text-slate">
             Hello! I’m Moses Mungai, a passionate and dedicated junior frontend
             developer with a keen eye for design and a love for crafting

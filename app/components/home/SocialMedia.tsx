@@ -12,6 +12,8 @@ import {
   TwitterLogoIcon,
 } from "@radix-ui/react-icons";
 import { LinkedinIcon } from "lucide-react";
+import { RxPaperPlane } from "react-icons/rx";
+import { FaPhoneVolume } from "react-icons/fa6";
 
 const social = [{ label: "GitHub" }, { label: "Linkedin" }];
 
@@ -21,7 +23,10 @@ export default function SocialMedia() {
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger asChild>
-            <Link href="/">
+            <Link
+              className="hover:text-deep_green hover:-translate-y-1 transition-all duration-200"
+              href="https://github.com/moses-mwangi/portfolio"
+            >
               <GitHubLogoIcon className=" w-5 h-5" />
             </Link>
           </TooltipTrigger>
@@ -33,7 +38,10 @@ export default function SocialMedia() {
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger asChild>
-            <Link href="/">
+            <Link
+              className="hover:text-deep_green hover:-translate-y-1 transition-all duration-200"
+              href="https://www.linkedin.com/in/moses-mwangi-5b4ba6292/"
+            >
               <LinkedinIcon className=" w-5 h-5" />
             </Link>
           </TooltipTrigger>
@@ -45,24 +53,31 @@ export default function SocialMedia() {
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger asChild>
-            <Link href="/">
-              <TwitterLogoIcon className=" w-5 h-5" />
+            <Link
+              className="hover:text-deep_green hover:-translate-y-1 transition-all duration-200"
+              href="/"
+            >
+              <RxPaperPlane />
             </Link>
           </TooltipTrigger>
           <TooltipContent side="right">
-            <p>Twitter</p>
+            <p>Email</p>
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger asChild>
-            <Link href="/">
-              <InstagramLogoIcon className=" w-5 h-5" />
+            <Link
+              className="hover:text-deep_green hover:-translate-y-1 transition-all duration-200"
+              href="/"
+            >
+              <FaPhoneVolume className=" w-5 h-5" />
+              {/* <InstagramLogoIcon className=" w-5 h-5" /> */}
             </Link>
           </TooltipTrigger>
           <TooltipContent side="right">
-            <p>Instagram</p>
+            <p>+254 725672675</p>
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>
