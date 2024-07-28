@@ -16,7 +16,7 @@ export default function Contact() {
   return (
     <div
       id="contact"
-      className="px-6 md:w-[80%] mx-auto mb-32 mt-16 pt-40"
+      className="px-6 md:w-[80%] mx-auto mb-32 mt-16 pt-48"
       data-aos="fade-up"
     >
       <div
