@@ -14,9 +14,13 @@ const play = Playfair_Display({
 
 export default function Contact() {
   return (
-    <div id="contact" className="px-6 md:w-[80%] mx-auto mb-32 mt-24 pt-32">
+    <div
+      id="contact"
+      className="px-6 md:w-[80%] mx-auto mb-32 mt-24 pt-32"
+      data-aos="fade-up"
+    >
       <div
-        data-aos="fade-up"
+        // data-aos="fade-up"
         className="flex gap-3 items-center justify-center mb-10 md:mb-16"
       >
         <span className=" h-[1px] w-[200px] bg-gray-700 block" />
@@ -33,7 +37,7 @@ export default function Contact() {
         <span className=" h-[1px] w-[200px] bg-gray-700 block" />
       </div>
       <div
-        data-aos="fade-up"
+        // data-aos="fade-up"
         className=" grid md:grid-cols-[1fr_1.4fr] grid-cols-1 gap-6 items-center"
       >
         <div>
