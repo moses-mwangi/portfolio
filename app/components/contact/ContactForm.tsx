@@ -34,37 +34,37 @@ export default function ContactForm() {
     const templateId = "template_hkpilep";
     const publicKey = "my4sRMVXuyAu-Oamg";
 
-    try {
-      if (formRef.current) {
-        emailjs
-          .sendForm(serviceId, templateId, formRef.current, {
-            publicKey: publicKey,
-          })
-          .then(
-            () => {
-              setEmail("");
-              setMessage("");
-              setName("");
-              setPhone("");
+    console.log(formRef.current);
 
-              toasts.toast({
-                title: "Success",
-                description: "Email sent successfully!",
-                duration: 3000,
-              });
+    if (formRef.current && email !== "" && name !== "" && message !== "") {
+      emailjs
+        .sendForm(serviceId, templateId, formRef.current, {
+          publicKey: publicKey,
+        })
+        .then(
+          () => {
+            setEmail("");
+            setMessage("");
+            setName("");
+            setPhone("");
 
-              toast.success("Email sent successfully!");
-            },
-            (error) => {
-              console.log("FAILED...", error.text);
-              toast.success("FAILED...", error.text);
-            }
-          );
-      } else {
-        console.log("Form reference is null");
-        toast.success("Form is null");
-      }
-    } catch (err) {}
+            toasts.toast({
+              title: "Success",
+              description: "Email sent successfully!",
+              duration: 3000,
+            });
+
+            toast.success("Email sent successfully!");
+          },
+          (error) => {
+            console.log("FAILED...", error.text);
+            toast.success("FAILED...", error.text);
+          }
+        );
+    } else {
+      console.log("Form reference is null");
+      toast.success("Form is null fill requirement first");
+    }
   };
 
   return (
