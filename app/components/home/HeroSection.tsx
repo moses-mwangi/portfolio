@@ -30,10 +30,10 @@ export default function HeroSection() {
     if (typeof window !== "undefined") {
       Aos.init({
         startEvent: "DOMContentLoaded",
-        offset: 100,
+        offset: 60,
         duration: 800,
         easing: "ease-in-sine",
-        delay: 100,
+        delay: 60,
         once: false,
         disableMutationObserver: true,
       });

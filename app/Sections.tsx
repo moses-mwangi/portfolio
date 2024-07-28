@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef } from "react";
+import React from "react";
 import Navbar from "./components/home/Navbar";
 import HeroSection from "./components/home/HeroSection";
 import About from "./components/about/About";

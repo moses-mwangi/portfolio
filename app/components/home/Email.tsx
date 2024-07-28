@@ -1,11 +1,10 @@
 import React from "react";
-import Link from "next/link"; // Adjust according to your routing library
 
 export default function Email() {
   return (
     <>
       <div className=" hidden md:flex fixed bottom-72 right-0">
-        <p className=" rotate-90 block w-[92px] text-lightest_slate  font-light text-[14px]">
+        <p className=" rotate-90 cursor-pointer block w-[92px] text-lightest_slate  font-light text-[14px]">
           moses.mwangi.me@gmail.com
         </p>
       </div>
