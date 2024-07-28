@@ -51,7 +51,7 @@ export default function Navbar() {
     <div>
       <nav className=" flex  justify-between mitems-center px-3 py-8 md:px-12 md:py-3 md:shadow-xl z-50 w-full fixed top-0 left-0">
         <div className="">
-          <h1 className=" text-deep_green text-4xl font-semibold md:text-2xl md:font-medium">
+          <h1 className="text-deep_green text-4xl font-semibold md:text-2xl md:font-medium">
             M
           </h1>
         </div>
