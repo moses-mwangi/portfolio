@@ -14,16 +14,14 @@ const play = Playfair_Display({
 
 export default function Contact() {
   return (
-    <div id="contact" className="px-6 md:w-[80%] mx-auto pt-20 mb-32 mt-24">
+    <div
+      id="contact"
+      className="px-6 md:w-[80%] mx-auto pt-20 mb-32 mt-24"
+      data-aos="fade-up"
+    >
       <div className="flex gap-3 items-center justify-center mb-10 md:mb-16">
-        <span
-          data-aos="fade-right"
-          className=" h-[1px] w-[200px] bg-gray-700 block"
-        />
-        <p
-          data-aos="zoom-in"
-          className="text-2xl md:text-4xl font-[600] whitespace-nowrap"
-        >
+        <span className=" h-[1px] w-[200px] bg-gray-700 block" />
+        <p className="text-2xl md:text-4xl font-[600] whitespace-nowrap">
           <span
             className={`${cn(
               play.className
@@ -33,10 +31,7 @@ export default function Contact() {
           </span>
           Get In Touch
         </p>
-        <span
-          data-aos="fade-left"
-          className=" h-[1px] w-[200px] bg-gray-700 block"
-        />
+        <span className=" h-[1px] w-[200px] bg-gray-700 block" />
       </div>
       <div className=" grid md:grid-cols-[1fr_1.4fr] grid-cols-1 gap-6 items-center">
         <div>
