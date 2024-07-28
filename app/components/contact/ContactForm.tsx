@@ -7,8 +7,8 @@ import { Button } from "@/components/ui/button";
 import { Barlow_Semi_Condensed as Barlow } from "next/font/google";
 import { cn } from "@/lib/utils";
 import emailjs from "@emailjs/browser";
+import { toast } from "sonner";
 import { useToast } from "@/components/ui/use-toast";
-import { ToastAction } from "@/components/ui/toast";
 
 const serif = Barlow({
   weight: ["400", "500"],
@@ -23,7 +23,7 @@ export default function ContactForm() {
   const [phone, setPhone] = useState("");
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState("");
-  const toast = useToast();
+  const toasts = useToast();
 
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -34,31 +34,37 @@ export default function ContactForm() {
     const templateId = "template_hkpilep";
     const publicKey = "my4sRMVXuyAu-Oamg";
 
-    if (formRef.current) {
-      emailjs
-        .sendForm(serviceId, templateId, formRef.current, {
-          publicKey: publicKey,
-        })
-        .then(
-          () => {
-            setEmail("");
-            setMessage("");
-            setName("");
-            setPhone("");
+    try {
+      if (formRef.current) {
+        emailjs
+          .sendForm(serviceId, templateId, formRef.current, {
+            publicKey: publicKey,
+          })
+          .then(
+            () => {
+              setEmail("");
+              setMessage("");
+              setName("");
+              setPhone("");
 
-            toast.toast({
-              title: "Success",
-              description: "Email sent successfully!",
-              duration: 3000,
-            });
-          },
-          (error) => {
-            console.log("FAILED...", error.text);
-          }
-        );
-    } else {
-      console.log("Form reference is null");
-    }
+              toasts.toast({
+                title: "Success",
+                description: "Email sent successfully!",
+                duration: 3000,
+              });
+
+              toast.success("Email sent successfully!");
+            },
+            (error) => {
+              console.log("FAILED...", error.text);
+              toast.success("FAILED...", error.text);
+            }
+          );
+      } else {
+        console.log("Form reference is null");
+        toast.success("Form is null");
+      }
+    } catch (err) {}
   };
 
   return (
