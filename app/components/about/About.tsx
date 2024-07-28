@@ -1,11 +1,9 @@
 import React from "react";
 import { PT_Serif as Playfair_Display } from "next/font/google";
 import Image from "next/image";
-import Skills from "./Skills";
 import { Barlow_Semi_Condensed as Barlow } from "next/font/google";
 import { cn } from "@/lib/utils";
 import TechStarck from "./TechStarck";
-import Aos from "aos";
 import "aos/dist/aos.css";
 
 const serif = Barlow({
@@ -47,7 +45,7 @@ export default function About() {
           )} flex flex-col gap-4 md:text-[17px]`}
         >
           <p data-aos="fade-up" className="text-slate">
-            Hello! I’m Moses Mungai, a passionate and dedicated junior frontend
+            Hello! I’m Moses Mungai, a passionate and dedicated fullstack
             developer with a keen eye for design and a love for crafting
             seamless user experiences. I specialize in creating responsive,
             user-friendly websites and applications using modern web
@@ -55,7 +53,7 @@ export default function About() {
           </p>
           <p data-aos="fade-up" className="text-slate">
             I began my coding journey with a fascination for how websites work
-            and quickly fell in love with frontend development. I thrive on
+            and quickly fell in love with fullstack development. I thrive on
             turning ideas into reality through code, and I continuously seek to
             improve my skills and stay updated with the latest industry trends.
           </p>
@@ -69,7 +67,6 @@ export default function About() {
             and productivity.
           </p>
           <TechStarck />
-          {/* <Skills /> */}
         </div>
         <div
           data-aos="zoom-in"

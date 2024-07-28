@@ -10,6 +10,39 @@ const serif = Barlow({
   style: ["normal"],
 });
 
+const teck = [
+  {
+    label: "Javascript",
+  },
+  {
+    label: "Typescript.js",
+  },
+  {
+    label: "React.js",
+  },
+  {
+    label: "Next.js",
+  },
+  {
+    label: "Html & Css",
+  },
+  {
+    label: "Mysql",
+  },
+  {
+    label: "node.js",
+  },
+  {
+    label: "Express.js",
+  },
+  {
+    label: "MongoDb",
+  },
+  {
+    label: "Posgress",
+  },
+];
+
 export default function TechStarck() {
   return (
     <div>
@@ -18,9 +51,19 @@ export default function TechStarck() {
       </p>
       <ul
         data-aos="fade-up"
+        data-aos-offset="200"
         className="mb-4 mt-2 text-xl font-normal grid grid-cols-3 text-slate"
       >
-        <li className={`${cn(serif.className)} flex items-center  gap-x-[6px]`}>
+        {teck.map((el) => (
+          <li
+            className={`${cn(serif.className)} flex items-center text-[15px]`}
+            key={el.label}
+          >
+            <RxPlay className="w-3 h-3" color="#66ffdb" />
+            <span className="text-[15px]">{el.label}</span>
+          </li>
+        ))}
+        {/* <li className={`${cn(serif.className)} flex items-center  gap-x-[6px]`}>
           <RxPlay className="w-3 h-3" color="#66ffdb" />
           <span className="text-[15px]">Javascript</span>
         </li>
@@ -47,7 +90,7 @@ export default function TechStarck() {
         <li className={`${cn(serif.className)} flex items-center text-[15px]`}>
           <RxPlay className="w-3 h-3" color="#66ffdb" />
           <span className="text-[15px]">Typescript.js</span>
-        </li>
+        </li> */}
       </ul>
     </div>
   );
