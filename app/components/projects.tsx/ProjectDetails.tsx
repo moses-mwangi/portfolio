@@ -62,19 +62,11 @@ export default function ProjectDetails({
         </p>
       </div>
       <Separator className=" hidden md:block" data-aos="fade-up" />
-      <div className="mt-4 flex flex-row gap-2 items-center">
-        <Link
-          data-aos="fade-right"
-          href="/"
-          className=" text-deep_green hover:text-white"
-        >
+      <div data-aos="fade-up" className="mt-4 flex flex-row gap-2 items-center">
+        <Link href="/" className=" text-deep_green hover:text-white">
           <RxExternalLink className=" w-6 h-6" />
         </Link>
-        <Link
-          data-aos="fade-right"
-          href="/"
-          className=" text-deep_green hover:text-white"
-        >
+        <Link href="/" className=" text-deep_green hover:text-white">
           <GitHubLogoIcon className="w-6 h-6" />
         </Link>
       </div>

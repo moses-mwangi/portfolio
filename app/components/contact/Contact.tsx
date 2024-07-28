@@ -40,7 +40,9 @@ export default function Contact() {
         <div>
           <ContactForm />
         </div>
-        <ContactInfo />
+        <div>
+          <ContactInfo />
+        </div>
       </div>
     </div>
   );
