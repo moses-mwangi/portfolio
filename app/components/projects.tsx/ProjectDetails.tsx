@@ -1,16 +1,16 @@
 "use client";
-
 import { Separator } from "@/components/ui/separator";
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
-import React, { useState } from "react";
+import React from "react";
 import { RxExternalLink } from "react-icons/rx";
-
 import {
   Tourney,
   Barlow_Semi_Condensed as Libre_Baskerville,
 } from "next/font/google";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
+import { projects } from "./ProjectService";
 
 const tourney = Tourney({
   weight: ["300"],
@@ -26,50 +26,65 @@ const serif = Libre_Baskerville({
   style: ["normal"],
 });
 
-export default function ProjectDetails({
-  number,
-  label,
-}: {
-  number: string;
-  label: string;
-}) {
-  const [arrow, setArrow] = useState(true);
+export default function ProjectDetails() {
   return (
-    <div>
-      <div data-aos="fade-up" className=" flex flex-col gap-3 mb-4">
-        <span
-          className={`${cn(
-            tourney.className
-          )} md:text-[60px] text-4xl font-bold text-slate`}
-        >
-          {number}
-        </span>
-        <h1 className="font-semibold text-xl md:text-2xl">{label}</h1>
-        <p
-          className={`${cn(
-            serif.className
-          )} text-slate md:text-[17px] leading-5`}
-        >
-          A web app for visualizing personalized Spotify data. View your top
-          artists, top tracks, recently played tracks, and detailed audio
-        </p>
-        <p
-          className={`${cn(
-            serif.className
-          )} text-green-300 font-medium opacity-50 text-[13px]`}
-        >
-          Next.js Tailwind Shadcn ui & Mysql
-        </p>
-      </div>
-      <Separator className=" hidden md:block" data-aos="fade-up" />
-      <div data-aos="fade-up" className="mt-4 flex flex-row gap-2 items-center">
-        <Link href="/" className=" text-deep_green hover:text-white">
-          <RxExternalLink className=" w-6 h-6" />
-        </Link>
-        <Link href="/" className=" text-deep_green hover:text-white">
-          <GitHubLogoIcon className="w-6 h-6" />
-        </Link>
-      </div>
+    <div className="mt-7">
+      {projects.map((el) => (
+        <div className="flex gap-4 mb-16 items-center" key={el.number}>
+          <div data-aos="fade-up">
+            <div className=" flex flex-col gap-3 mb-4">
+              <span
+                className={`${cn(
+                  tourney.className
+                )} md:text-[60px] text-4xl font-bold text-slate`}
+              >
+                {el.number}
+              </span>
+              <h1 className="font-semibold text-xl md:text-2xl">{el.label}</h1>
+              <p
+                className={`${cn(
+                  serif.className
+                )} text-slate md:text-[17px] leading-5`}
+              >
+                {el.description}
+              </p>
+              <p
+                className={`${cn(
+                  serif.className
+                )} text-green-300 font-medium opacity-50 text-[13px]`}
+              >
+                {el.tecknology}
+              </p>
+            </div>
+            <Separator className=" hidden md:block" />
+            <div className="mt-4 flex flex-row gap-2 items-center">
+              <Link
+                href={el.link}
+                className=" text-deep_green hover:text-white"
+              >
+                <RxExternalLink className=" w-6 h-6" />
+              </Link>
+              <Link href="/" className=" text-deep_green hover:text-white">
+                <GitHubLogoIcon className="w-6 h-6" />
+              </Link>
+            </div>
+          </div>
+          <div
+            data-aos="zoom-in"
+            data-aos-duration="1500"
+            data-aos-delay="200"
+            className=" flex flex-col gap-16"
+          >
+            <Image
+              className="md:w-[800px] opacity-80 transition-all duration-200 hover:opacity-100 rounded-sm"
+              src={el.url}
+              width={600}
+              height={600}
+              alt="Dashboard rep"
+            />
+          </div>
+        </div>
+      ))}
     </div>
   );
 }
