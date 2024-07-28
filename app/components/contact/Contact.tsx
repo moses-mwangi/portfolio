@@ -16,7 +16,7 @@ export default function Contact() {
   return (
     <div
       id="contact"
-      className="px-6 md:w-[80%] mx-auto pt-20 mb-32 mt-24"
+      className="px-6 md:w-[80%] mx-auto mb-32 pt-52"
       data-aos="fade-up"
     >
       <div className="flex gap-3 items-center justify-center mb-10 md:mb-16">
