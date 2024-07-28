@@ -63,22 +63,24 @@ export default function HeroSection() {
             Hi, my name is
           </h1>
           <p className=" text-4xl font-bold text-lightest_slate md:font-extrabold md:text-[56px] leading-normal mb-1">
-            Moses Mungai.
+            Moses Mwangi.
           </p>
           <p
             data-aos="fade-right"
             className="text-slate text-4xl font-bold md:text-[50px] leading-none mb-10"
           >
-            I’m a Frontend developer
+            {/* I’m a Fullstack web developer */}
+            I’m a Fullstack developer.
           </p>
+
           <p
             className={`${cn(
               serif.className
             )} md:mb-16 mb-6 md:w-[580px] text-slate md:text-[17px]`}
           >
-            I am a passionate and dedicated Frontend Developer with a strong
+            I am a passionate and dedicated Fullstack Developer with a strong
             foundation in web development technologies and a keen eye for
-            design. My journey in frontend development began quite a years back
+            design. My journey in fullstack development began quite a years back
             , and I have since honed my skills through continuous learning and
             hands-on experience in various projects.
           </p>
