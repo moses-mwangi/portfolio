@@ -27,26 +27,26 @@ export default function HeroSection() {
   // };
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      Aos.init({
-        startEvent: "DOMContentLoaded",
-        offset: 60,
-        duration: 800,
-        easing: "ease-in-sine",
-        delay: 60,
-        once: false,
-        disableMutationObserver: true,
-      });
+    // if (typeof window !== "undefined") {
+    Aos.init({
+      // startEvent: "DOMContentLoaded",
+      offset: 60,
+      duration: 800,
+      easing: "ease-in-sine",
+      delay: 60,
+      once: false,
+      // disableMutationObserver: ,
+    });
 
-      const handleRouteChange = () => {
-        Aos.refresh();
-      };
+    // const handleRouteChange = () => {
+    Aos.refresh();
+    // };
 
-      Router.events.on("routeChangeComplete", handleRouteChange);
-      return () => {
-        Router.events.off("routeChangeComplete", handleRouteChange);
-      };
-    }
+    // Router.events.on("routeChangeComplete", handleRouteChange);
+    // return () => {
+    //   Router.events.off("routeChangeComplete", handleRouteChange);
+    // };
+    // }
   }, []);
 
   return (
