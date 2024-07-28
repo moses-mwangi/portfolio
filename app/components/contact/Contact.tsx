@@ -33,7 +33,10 @@ export default function Contact() {
         </p>
         <span className=" h-[1px] w-[200px] bg-gray-700 block" />
       </div>
-      <div className=" grid md:grid-cols-[1fr_1.4fr] grid-cols-1 gap-6 items-center">
+      <div
+        className=" grid md:grid-cols-[1fr_1.4fr] grid-cols-1 gap-6 items-center"
+        data-aos="fade-up"
+      >
         <div>
           <ContactForm />
         </div>

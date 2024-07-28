@@ -23,7 +23,10 @@ const play = Playfair_Display({
 
 export default function ContactInfo() {
   return (
-    <div className="flex flex-col gap-3" data-aos="fade-left">
+    <div
+      className="flex flex-col gap-3"
+      // data-aos="fade-left"
+    >
       <p
         // data-aos="fade-left"
         className=" font-semibold text-xl text-lightest_slate opacity-80 flex justify-center"

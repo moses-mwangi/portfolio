@@ -68,7 +68,10 @@ export default function ContactForm() {
   };
 
   return (
-    <Card data-aos="fade-right" className="rounded-sm  bg-transparent">
+    <Card
+      //  data-aos="fade-right"
+      className="rounded-sm  bg-transparent"
+    >
       <p className="flex justify-center mt-5 mb-8 md:text-[17px] font-medium">
         Let’s work together
       </p>
