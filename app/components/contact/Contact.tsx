@@ -14,7 +14,7 @@ const play = Playfair_Display({
 
 export default function Contact() {
   return (
-    <div id="contact" className="px-6 md:w-[80%] mx-auto mb-32 pt-28">
+    <div id="contact" className="px-6 md:w-[80%] mx-auto mb-32 mt-24 pt-32">
       <div
         data-aos="fade-up"
         className="flex gap-3 items-center justify-center mb-10 md:mb-16"
