@@ -51,9 +51,12 @@ export default function Navbar() {
     <div>
       <nav className=" flex  justify-between mitems-center px-3 py-8 md:px-12 md:py-3 md:shadow-xl z-50 w-full fixed top-0 left-0">
         <div className="">
-          <h1 className="text-deep_green text-4xl font-semibold md:text-2xl md:font-medium">
+          <Link
+            href="/"
+            className="text-deep_green text-4xl font-semibold md:text-2xl md:font-medium"
+          >
             M
-          </h1>
+          </Link>
         </div>
         <NavModal />
         <div className=" hidden md:flex flex-row items-center md:pt-0 gap-12 md:gap-7 pt-20">
@@ -62,7 +65,6 @@ export default function Navbar() {
               onClick={() => {
                 scrollToHome();
               }}
-              // href="/#home"
               className={`${cn(play.className)} flex gap-1 cursor-pointer`}
             >
               <span className=" text-lightGreen">01.</span>
@@ -72,7 +74,6 @@ export default function Navbar() {
             </div>
             <span
               className={`${cn(play.className)} flex gap-1 cursor-pointer`}
-              // href="/#about"
               onClick={scrollToAbout}
             >
               <span className=" text-lightGreen">02.</span>
@@ -80,19 +81,9 @@ export default function Navbar() {
                 About
               </span>
             </span>
-            <div
-              onClick={scrollToAbout}
-              // href="/#about"
-              className={`${cn(play.className)} flex gap-1 cursor-pointer`}
-            >
-              <span className=" text-lightGreen">03.</span>
-              <span className=" text-lightest_slate hover:text-lightGreen transition-all">
-                Skills
-              </span>
-            </div>
+
             <div
               onClick={scrollToProject}
-              // href="/#projects"
               className={`${cn(play.className)} flex gap-1 cursor-pointer`}
             >
               <div className=" text-lightGreen">04.</div>
@@ -101,7 +92,6 @@ export default function Navbar() {
               </div>
             </div>
             <div
-              // href="/#contact"
               className={`${cn(play.className)} flex gap-1 cursor-pointer`}
               onClick={scrollToContact}
             >
