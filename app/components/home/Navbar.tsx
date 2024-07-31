@@ -3,14 +3,7 @@ import React from "react";
 import { PT_Serif as Playfair_Display } from "next/font/google";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { LucideList } from "lucide-react";
 
 const play = Playfair_Display({

@@ -30,7 +30,10 @@ export default function ProjectDetails() {
   return (
     <div className="mt-7">
       {projects.map((el) => (
-        <div className="flex gap-4 mb-16 items-center" key={el.number}>
+        <div
+          className="flex flex-col md:flex-row gap-4 mb-16 items-center"
+          key={el.number}
+        >
           <div data-aos="fade-up">
             <div className=" flex flex-col gap-3 mb-4">
               <span
