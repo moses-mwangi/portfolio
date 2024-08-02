@@ -17,13 +17,11 @@ export default function Contact() {
   return (
     <div
       id="contact"
-      className="px-6 md:w-[80%] mx-auto mb-32 mt-16 pt-48"
+      className="px-6 md:w-[80%] mx-auto mb-32 pt-48"
       data-aos="fade-up"
+      data-aos-offset="50"
     >
-      <div
-        // data-aos="fade-up"
-        className="flex gap-3 items-center justify-center mb-10 md:mb-16"
-      >
+      <div className="flex gap-3 items-center justify-center mb-10 md:mb-16">
         <span className=" h-[1px] w-[200px] bg-gray-700 block" />
         <p className="text-2xl md:text-4xl font-[600] whitespace-nowrap">
           <span

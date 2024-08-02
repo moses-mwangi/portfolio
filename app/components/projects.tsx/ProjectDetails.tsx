@@ -31,12 +31,10 @@ export default function ProjectDetails() {
     <div className="mt-7" data-aos="fade-up">
       {projects.map((el) => (
         <div
-          className="flex flex-col md:flex-row gap-4 mb-16 items-center"
+          className="flex flex-col md:flex-row gap-4 mb-20 items-center"
           key={el.number}
         >
-          <div
-          // data-aos="fade-up"
-          >
+          <div>
             <div className=" flex flex-col gap-3 mb-4">
               <span
                 className={`${cn(
@@ -69,17 +67,12 @@ export default function ProjectDetails() {
               >
                 <RxExternalLink className=" w-6 h-6" />
               </Link>
-              <Link href="/" className=" text-deep_green hover:text-white">
+              <Link href={el.git} className=" text-deep_green hover:text-white">
                 <GitHubLogoIcon className="w-6 h-6" />
               </Link>
             </div>
           </div>
-          <div
-          // data-aos="zoom-in"
-          // data-aos-duration="800"
-          // data-aos-delay="100"
-          // className=" flex flex-col gap-16"
-          >
+          <div>
             <Image
               className="md:w-[800px] opacity-80 transition-all duration-200 hover:opacity-100 rounded-sm"
               src={el.url}

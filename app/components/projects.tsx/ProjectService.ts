@@ -8,6 +8,7 @@ export const projects = [
     tecknology: "Next.js, Tailwind, Shadcn-ui, nodeJs, express & mongodb",
 
     url: "/images/dashboard.png",
+    git: "https://github.com/moses-mwangi/food-delivery-dasboard",
   },
   {
     number: 2,
@@ -17,6 +18,7 @@ export const projects = [
       "A web app website for a tomato restaurants where a client can order the available food and payed for it before delivery",
     tecknology: "Next.js, Tailwind, Shadcn-ui, nodeJs, express & mongodb",
     url: "/images/deliver.png",
+    git: "https://github.com/moses-mwangi/food-delivery",
   },
   {
     number: 3,
@@ -26,5 +28,6 @@ export const projects = [
       "A geritch website representation which also show our menu where you will have to make reservation before visiting",
     tecknology: "ReactJs & styled-components",
     url: "/images/geritch.png",
+    git: "https://github.com/moses-mwangi/my-restaurants",
   },
 ];
