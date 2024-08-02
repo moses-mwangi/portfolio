@@ -4,27 +4,27 @@ export const projects = [
     label: "FullStack Project",
     link: "https://food-delivery-dasboard-pk5j.vercel.app",
     description:
-      "A web app for visualizing personalized Spotify data. View your top artists, top tracks, recently played tracks, and detailed audio",
-    tecknology: "Next.js Tailwind Shadcn ui & Mysql",
+      "A web app dashboard to manage food ordering and delivering it to our client and also confirmed payment of food ordered",
+    tecknology: "Next.js, Tailwind, Shadcn-ui, nodeJs, express & mongodb",
 
-    url: "/images/dashb.png",
+    url: "/images/dashboard.png",
   },
   {
     number: 2,
     link: "https://food-delivery-bkrk.vercel.app",
     label: "FullStack Project",
     description:
-      "A web app for visualizing personalized Spotify data. View your top artists, top tracks, recently played tracks, and detailed audio",
-    tecknology: "Next.js Tailwind Shadcn ui & Mysql",
-    url: "/images/food_deliver.png",
+      "A web app website for a tomato restaurants where a client can order the available food and payed for it before delivery",
+    tecknology: "Next.js, Tailwind, Shadcn-ui, nodeJs, express & mongodb",
+    url: "/images/deliver.png",
   },
   {
     number: 3,
     link: "https://my-restaurants.vercel.app",
     label: "Frontend Project",
     description:
-      "A web app for visualizing personalized Spotify data. View your top artists, top tracks, recently played tracks, and detailed audio",
-    tecknology: "Next.js Tailwind Shadcn ui & Mysql",
-    url: "/images/house.png",
+      "A geritch website representation which also show our menu where you will have to make reservation before visiting",
+    tecknology: "ReactJs & styled-components",
+    url: "/images/geritch.png",
   },
 ];
