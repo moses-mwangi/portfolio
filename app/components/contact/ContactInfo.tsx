@@ -3,71 +3,41 @@ import { GitHubLogoIcon, LinkedInLogoIcon } from "@radix-ui/react-icons";
 import { RxPaperPlane } from "react-icons/rx";
 import { FaPhoneVolume } from "react-icons/fa6";
 import Link from "next/link";
-import { PT_Serif as Playfair_Display } from "next/font/google";
 import { cn } from "@/lib/utils";
-import { Barlow_Semi_Condensed as Barlow } from "next/font/google";
+import { Barlow_Semi_Condensed } from "next/font/google";
 
-const serif = Barlow({
+const serif = Barlow_Semi_Condensed({
   weight: ["400", "500"],
   subsets: ["latin"],
   variable: "--barlow",
   style: ["normal"],
 });
 
-const play = Playfair_Display({
-  weight: ["400"],
-  subsets: ["latin"],
-  variable: "--play",
-  style: ["normal"],
-});
-
 export default function ContactInfo() {
   return (
-    <div
-      className="flex flex-col gap-3"
-      // data-aos="fade-left"
-    >
-      <p
-        // data-aos="fade-left"
-        className=" font-semibold text-xl text-lightest_slate opacity-80 flex justify-center"
-      >
+    <div className="flex flex-col gap-3">
+      <p className=" font-semibold text-xl text-lightest_slate opacity-80 flex justify-center">
         Contact Me
       </p>
       <div className={`${cn(serif.className)}`}>
-        <h1
-          // data-aos="fade-left"
-          className=" font-[500] text-[18px] md:text-xl text-lightest_slate opacity-85"
-        >
+        <h1 className=" font-[500] text-[18px] md:text-xl text-lightest_slate opacity-85">
           Lets work together
         </h1>
-        <p
-          // data-aos="fade-left"
-          className="text-slate mt-3"
-        >
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga
-          assumenda eius eligendi ullam quo! Ex doloremque, est nulla deserunt
-          distinctio nostrum non, amet, at libero sit perferendis. Corrupti, non
-          quas.
+        <p className="text-slate mt-3">
+          If intrested i’d really love to discuss how I can contribute to your
+          projects and share more about my experiences. Feel free to reach out
+          to me at [moses.mwangi.me@gmail.com] or connect with me on LinkedIn
         </p>
       </div>
       <div className={`${cn(serif.className)} flex flex-col mt-8 mb-8`}>
-        <span
-          // data-aos="fade-left"
-          className="flex items-center gap-2 text-lightest_slate text-[18px]"
-        >
+        <span className="flex items-center gap-2 text-lightest_slate text-[18px]">
           <RxPaperPlane color="lightgreen" /> moses.mwangi.me@gmail.com
         </span>
-        <span
-          // data-aos="fade-left"
-          className="flex items-center gap-2 text-lightest_slate text-[18px]"
-        >
+        <span className="flex items-center gap-2 text-lightest_slate text-[18px]">
           <FaPhoneVolume color="lightgreen" /> +254 725672675
         </span>
       </div>
-      <div
-        //  data-aos="fade-left"
-        className="flex gap-5"
-      >
+      <div className="flex gap-5">
         <Link
           href="https://github.com/moses-mwangi/portfolio"
           className="text-deep_green hover:text-white hover:-translate-y-1 transition-all duration-200"
