@@ -28,13 +28,15 @@ const serif = Libre_Baskerville({
 
 export default function ProjectDetails() {
   return (
-    <div className="mt-7">
+    <div className="mt-7" data-aos="fade-up">
       {projects.map((el) => (
         <div
           className="flex flex-col md:flex-row gap-4 mb-16 items-center"
           key={el.number}
         >
-          <div data-aos="fade-up">
+          <div
+          // data-aos="fade-up"
+          >
             <div className=" flex flex-col gap-3 mb-4">
               <span
                 className={`${cn(
@@ -73,10 +75,10 @@ export default function ProjectDetails() {
             </div>
           </div>
           <div
-            data-aos="zoom-in"
-            data-aos-duration="800"
-            data-aos-delay="100"
-            className=" flex flex-col gap-16"
+          // data-aos="zoom-in"
+          // data-aos-duration="800"
+          // data-aos-delay="100"
+          // className=" flex flex-col gap-16"
           >
             <Image
               className="md:w-[800px] opacity-80 transition-all duration-200 hover:opacity-100 rounded-sm"
