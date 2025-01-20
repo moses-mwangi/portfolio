@@ -6,6 +6,9 @@ export const teck = [
     label: "Typescript.js",
   },
   {
+    label: "Python",
+  },
+  {
     label: "React.js",
   },
   {
@@ -28,5 +31,20 @@ export const teck = [
   },
   {
     label: "Posgress",
+  },
+  {
+    label: "Mysql",
+  },
+  {
+    label: "Drizzle Orm",
+  },
+  {
+    label: "Sequilize",
+  },
+  {
+    label: "Prisma",
+  },
+  {
+    label: "mongoose",
   },
 ];

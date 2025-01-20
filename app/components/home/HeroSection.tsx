@@ -67,10 +67,17 @@ export default function HeroSection() {
           </p>
           <p
             data-aos="fade-right"
+            className="text-slate text-4xl font-bold md:text-[50px] leading-none mb-1"
+          >
+            {/* I’m a Fullstack web developer */}
+            I’m a Fullstack developer &
+          </p>
+          <p
+            data-aos="fade-right"
             className="text-slate text-4xl font-bold md:text-[50px] leading-none mb-10"
           >
             {/* I’m a Fullstack web developer */}
-            I’m a Fullstack developer.
+            Machine and Deep Learning experts
           </p>
 
           <p

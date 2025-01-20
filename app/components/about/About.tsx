@@ -77,8 +77,8 @@ export default function About() {
           <div className="relative h-72 w-72 -top-3 -left-3  transition-all duration-200 hover:translate-x-[-6px] hover:translate-y-[-6px]">
             <Image
               className="object-cover w-full h-full rounded-sm"
-              src="/images/JMN_6818.JPG"
-              // src="/images/moses.jpg"
+              // src="/images/JMN_6818.JPG"
+              src="/images/moses_edited.jpg"
               alt="moses mwangi"
               width={600}
               height={600}
