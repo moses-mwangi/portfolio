@@ -15,13 +15,23 @@ export const projects = [
     link: "https://food-delivery-bkrk.vercel.app",
     label: "FullStack Project",
     description:
-      "A web app website for a tomato restaurants where a client can order the available food and payed for it before delivery",
+      "A website for a tomato restaurants where a client can order the available food and payed for it before delivery",
     tecknology: "Next.js, Tailwind, Shadcn-ui, nodeJs, express & mongodb",
     url: "/images/deliver.png",
     git: "https://github.com/moses-mwangi/food-delivery",
   },
   {
     number: 3,
+    link: "https://real-estate-mu-peach.vercel.app/",
+    label: "FullStack Project",
+    description:
+      "A website for a tomato restaurants where a client can order the available food and payed for it before delivery",
+    tecknology: "Next.js, Tailwind, Shadcn-ui, nodeJs, express & mongodb",
+    url: "/images/estate.png",
+    git: "https://github.com/moses-mwangi/real-estate",
+  },
+  {
+    number: 4,
     link: "https://my-restaurants.vercel.app",
     label: "Frontend Project",
     description:

@@ -95,7 +95,7 @@ export default function Navbar() {
             </div>
           </ul>
           <Link
-            href="/#resume"
+            href="https://drive.google.com/file/d/1xIzQZn3Z533N8gx9ylHtSz5P8U30CmtJ/view?usp=sharings"
             className="px-4 py-2 rounded-sm text-lightGreen text-[13px] font-light border-[1px] border-solid border-lightGreen  w-fit transition-all duration-300 hover:shadow-[3px_3px_0_lightGreen]  hover:translate-x-[-3px] hover:translate-y-[-3px]"
           >
             Resume

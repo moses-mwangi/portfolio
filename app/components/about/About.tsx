@@ -78,6 +78,7 @@ export default function About() {
             <Image
               className="object-cover w-full h-full rounded-sm"
               src="/images/JMN_6818.JPG"
+              // src="/images/moses.jpg"
               alt="moses mwangi"
               width={600}
               height={600}
