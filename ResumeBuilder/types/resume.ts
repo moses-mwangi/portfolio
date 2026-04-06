@@ -33,7 +33,7 @@ export interface Education {
   endDate: string;
   gpa?: string;
   achievements?: string[];
-  current: boolean;
+  current?: boolean;
   description?: string[];
 }
 

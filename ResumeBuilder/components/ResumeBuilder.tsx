@@ -178,112 +178,6 @@ const ResumePreview = ({
     localStorage.setItem("resumeHeaderStyle", style);
   };
 
-  // const exportToPDF = async () => {
-  //   if (!previewRef.current) return;
-
-  //   setIsExporting(true);
-  //   try {
-  //     const element = previewRef.current;
-  //     const canvas = await html2canvas(element, {
-  //       scale: 2,
-  //       backgroundColor: "#ffffff",
-  //       logging: false,
-  //       useCORS: true,
-  //     });
-
-  //     const imgData = canvas.toDataURL("image/png");
-  //     const pdf = new jsPDF({
-  //       orientation: "portrait",
-  //       unit: "mm",
-  //       format: "a4",
-  //     });
-
-  //     const imgWidth = 210;
-  //     const pageHeight = 297;
-  //     const imgHeight = (canvas.height * imgWidth) / canvas.width;
-  //     let heightLeft = imgHeight;
-  //     let position = 0;
-
-  //     pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-  //     heightLeft -= pageHeight;
-
-  //     while (heightLeft >= 0) {
-  //       position = heightLeft - imgHeight;
-  //       pdf.addPage();
-  //       pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-  //       heightLeft -= pageHeight;
-  //     }
-
-  //     pdf.save(`resume-${resumeData?.personalInfo.fullName || "document"}.pdf`);
-  //     setExportSuccess(true);
-  //     setTimeout(() => setExportSuccess(false), 3000);
-  //   } catch (error) {
-  //     console.error("Error generating PDF:", error);
-  //   } finally {
-  //     setIsExporting(false);
-  //   }
-  // };
-
-  const exportToPDF = async () => {
-    if (!previewRef.current) return;
-
-    setIsExporting(true);
-    try {
-      const element = previewRef.current;
-
-      // Capture the entire element as canvas
-      const canvas = await html2canvas(element, {
-        scale: 2,
-        backgroundColor: "#ffffff",
-        logging: false,
-        useCORS: true,
-        windowWidth: element.scrollWidth,
-        windowHeight: element.scrollHeight,
-      });
-
-      const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF({
-        orientation: "portrait",
-        unit: "mm",
-        format: "a4",
-      });
-
-      // A4 dimensions in mm
-      const pdfWidth = 210;
-      const pdfHeight = 297;
-
-      // Calculate image dimensions
-      const imgWidth = pdfWidth;
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
-
-      let heightLeft = imgHeight;
-      let position = 0;
-      let pageNumber = 1;
-
-      // Add first page
-      pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-      heightLeft -= pdfHeight;
-
-      // Add additional pages if needed
-      while (heightLeft > 0) {
-        position = heightLeft - imgHeight;
-        pdf.addPage();
-        pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-        heightLeft -= pdfHeight;
-        pageNumber++;
-      }
-
-      // Save the PDF
-      pdf.save(`resume-${resumeData?.personalInfo.fullName || "document"}.pdf`);
-      setExportSuccess(true);
-      setTimeout(() => setExportSuccess(false), 3000);
-    } catch (error) {
-      console.error("Error generating PDF:", error);
-    } finally {
-      setIsExporting(false);
-    }
-  };
-
   const exportToJSON = () => {
     if (!resumeData) return;
     const dataStr = JSON.stringify(resumeData, null, 2);
@@ -510,8 +404,6 @@ const ResumePreview = ({
             <div className="grid grid-cols-3 gap-x-14">
               {Object.entries(groupedSkills).map(
                 ([category, categorySkills]) => {
-                  const Icon = categoryIcons[category] || DefaultIcon;
-
                   return (
                     <div key={category}>
                       <div>
@@ -688,6 +580,11 @@ export function ResumeBuilder() {
   const [history, setHistory] = useState<ResumeData[]>([initialData]);
   const [historyIndex, setHistoryIndex] = useState(0);
   const previewRef = useRef<HTMLDivElement>(null);
+
+  const [isExporting, setIsExporting] = useState(false);
+  const [exportSuccess, setExportSuccess] = useState(false);
+  const [headerStyle, setHeaderStyle] = useState<HeaderStyle>("side-by-side");
+  const [showStyleSelector, setShowStyleSelector] = useState(false);
 
   // Load/Save to localStorage
   useEffect(() => {
@@ -1014,28 +911,323 @@ export function ResumeBuilder() {
     }
   };
 
-  // PDF Export
+  const exportToPDFd = async () => {
+    if (!previewRef.current) return;
+
+    setIsExporting(true);
+    try {
+      const element = previewRef.current;
+
+      // Capture the entire element as canvas
+      const canvas = await html2canvas(element, {
+        scale: 2,
+        backgroundColor: "#ffffff",
+        logging: false,
+        useCORS: true,
+        windowWidth: element.scrollWidth,
+        windowHeight: element.scrollHeight,
+      });
+
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF({
+        orientation: "portrait",
+        unit: "mm",
+        format: "a4",
+      });
+
+      // A4 dimensions in mm
+      const pdfWidth = 210;
+      const pdfHeight = 297;
+
+      // Calculate image dimensions
+      const imgWidth = pdfWidth;
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+      let heightLeft = imgHeight;
+      let position = 0;
+      let pageNumber = 1;
+
+      // Add first page
+      pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+      heightLeft -= pdfHeight;
+
+      // Add additional pages if needed
+      while (heightLeft > 0) {
+        position = heightLeft - imgHeight;
+        pdf.addPage();
+        pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+        heightLeft -= pdfHeight;
+        pageNumber++;
+      }
+
+      // Save the PDF
+      pdf.save(`resume-${resumeData?.personalInfo.fullName || "document"}.pdf`);
+      setExportSuccess(true);
+      setTimeout(() => setExportSuccess(false), 3000);
+    } catch (error) {
+      console.error("Error generating PDF:", error);
+    } finally {
+      setIsExporting(false);
+    }
+  };
+
+  const exportToPDFf = async () => {
+    if (!previewRef.current) return;
+
+    setIsExporting(true);
+
+    try {
+      const element = previewRef.current;
+
+      const canvas = await html2canvas(element, {
+        scale: 2,
+        backgroundColor: "#ffffff",
+        useCORS: true,
+        windowWidth: element.scrollWidth,
+        windowHeight: element.scrollHeight,
+      });
+
+      const imgData = canvas.toDataURL("image/png");
+
+      const pdf = new jsPDF({
+        orientation: "portrait",
+        unit: "mm",
+        format: "a4",
+      });
+
+      // A4 dimensions
+      const pdfWidth = 210;
+      const pdfHeight = 297;
+
+      // Add margins
+      const marginTop = 10;
+      const marginBottom = 15;
+      const marginLeft = 10;
+
+      const usableHeight = pdfHeight - marginTop - marginBottom;
+
+      const imgWidth = pdfWidth - marginLeft * 2;
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+      let heightLeft = imgHeight;
+      let position = marginTop;
+
+      let pageNumber = 1;
+
+      // First page
+      pdf.addImage(imgData, "PNG", marginLeft, position, imgWidth, imgHeight);
+
+      // Add page number
+      pdf.setFontSize(10);
+      pdf.text(`Page ${pageNumber}`, pdfWidth / 2, pdfHeight - 5, {
+        align: "center",
+      });
+
+      heightLeft -= usableHeight;
+
+      // Additional pages
+      while (heightLeft > 0) {
+        position = marginTop - imgHeight + heightLeft;
+
+        pdf.addPage();
+
+        pdf.addImage(imgData, "PNG", marginLeft, position, imgWidth, imgHeight);
+
+        pageNumber++;
+
+        // Add page number
+        pdf.setFontSize(10);
+        pdf.text(`Page ${pageNumber}`, pdfWidth / 2, pdfHeight - 5, {
+          align: "center",
+        });
+
+        heightLeft -= usableHeight;
+      }
+
+      pdf.save(`resume-${resumeData?.personalInfo.fullName || "document"}.pdf`);
+
+      setExportSuccess(true);
+      setTimeout(() => setExportSuccess(false), 3000);
+    } catch (error) {
+      console.error("Error generating PDF:", error);
+    } finally {
+      setIsExporting(false);
+    }
+  };
+
+  const exportToPDfF = async () => {
+    if (!previewRef.current) return;
+
+    setIsExporting(true);
+    try {
+      const element = previewRef.current;
+
+      // Capture the entire element as canvas
+      const canvas = await html2canvas(element, {
+        scale: 2,
+        backgroundColor: "#ffffff",
+        logging: false,
+        useCORS: true,
+        windowWidth: element.scrollWidth,
+        windowHeight: element.scrollHeight,
+      });
+
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF({
+        orientation: "portrait",
+        unit: "mm",
+        format: "a4",
+      });
+
+      // A4 dimensions in mm
+      const pdfWidth = 210;
+      const pdfHeight = 297;
+
+      // Margins (20mm top and bottom for better spacing)
+      const margin = 5;
+      const usableHeight = pdfHeight - margin * 2;
+
+      // Calculate image dimensions
+      const imgWidth = pdfWidth - margin * 2;
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+      let heightLeft = imgHeight;
+      let currentPosition = 0;
+      let pageNumber = 1;
+
+      // Calculate total pages needed
+      const totalPages = Math.ceil(imgHeight / usableHeight);
+
+      // Add first page
+      pdf.addImage(
+        imgData,
+        "PNG",
+        margin,
+        margin - currentPosition,
+        imgWidth,
+        imgHeight,
+      );
+      heightLeft -= usableHeight;
+      currentPosition += usableHeight;
+
+      // Add page number to first page
+      pdf.setFontSize(10);
+      pdf.setTextColor(100, 100, 100);
+      pdf.text(
+        `Page ${pageNumber} of ${totalPages}`,
+        pdfWidth / 2,
+        pdfHeight - 10,
+        { align: "center" },
+      );
+
+      // Add additional pages if needed
+      while (heightLeft > 0) {
+        pdf.addPage();
+        pageNumber++;
+
+        // Add the next portion of the image
+        pdf.addImage(
+          imgData,
+          "PNG",
+          margin,
+          margin - currentPosition,
+          imgWidth,
+          imgHeight,
+        );
+        heightLeft -= usableHeight;
+        currentPosition += usableHeight;
+
+        // Add page number
+        pdf.setFontSize(10);
+        pdf.setTextColor(100, 100, 100);
+        pdf.text(
+          `Page ${pageNumber} of ${totalPages}`,
+          pdfWidth / 2,
+          pdfHeight - 10,
+          { align: "center" },
+        );
+      }
+
+      // Save the PDF
+      pdf.save(`resume-${resumeData?.personalInfo.fullName || "document"}.pdf`);
+      setExportSuccess(true);
+      setTimeout(() => setExportSuccess(false), 3000);
+    } catch (error) {
+      console.error("Error generating PDF:", error);
+    } finally {
+      setIsExporting(false);
+    }
+  };
+
   const exportToPDF = async () => {
     if (!previewRef.current) return;
 
-    const element = previewRef.current;
-    const canvas = await html2canvas(element, {
-      scale: 2,
-      backgroundColor: "#ffffff",
-    });
+    setIsExporting(true);
 
-    const imgData = canvas.toDataURL("image/png");
-    const pdf = new jsPDF({
-      orientation: "portrait",
-      unit: "px",
-      format: "a4",
-    });
+    try {
+      const element = previewRef.current;
 
-    const imgWidth = pdf.internal.pageSize.getWidth();
-    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      const canvas = await html2canvas(element, {
+        scale: 2,
+        useCORS: true,
+        backgroundColor: "#ffffff",
+      });
 
-    pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
-    pdf.save(`resume-${resumeData.personalInfo.fullName || "data"}.pdf`);
+      const imgData = canvas.toDataURL("image/png");
+
+      const pdf = new jsPDF("p", "mm", "a4");
+
+      const pdfWidth = 210;
+      const pdfHeight = 297;
+
+      const margin = 10;
+
+      const imgWidth = pdfWidth - margin * 2;
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+      let position = 0;
+      let heightLeft = imgHeight;
+
+      let pageNumber = 1;
+
+      const pageHeight = pdfHeight - margin * 2;
+
+      const totalPages = Math.ceil(imgHeight / pageHeight);
+
+      while (heightLeft > 0) {
+        pdf.addImage(
+          imgData,
+          "PNG",
+          margin,
+          margin - position,
+          imgWidth,
+          imgHeight,
+        );
+
+        pdf.setFontSize(10);
+
+        pdf.text(
+          `Page ${pageNumber} of ${totalPages}`,
+          pdfWidth / 2,
+          pdfHeight - 5,
+          { align: "center" },
+        );
+
+        heightLeft -= pageHeight;
+        position += pageHeight;
+        pageNumber++;
+
+        if (heightLeft > 0) {
+          pdf.addPage();
+        }
+      }
+
+      pdf.save(`resume-${resumeData?.personalInfo.fullName || "document"}.pdf`);
+    } catch (error) {
+      console.error("Error generating PDF:", error);
+    } finally {
+      setIsExporting(false);
+    }
   };
 
   // Keyboard shortcuts
@@ -1355,7 +1547,13 @@ export function ResumeBuilder() {
                     Download PDF
                   </Button>
                 </div>
-                <div ref={previewRef}>
+                {/* <div ref={previewRef}>
+                  <ResumePreview
+                    data={resumeData}
+                    template={selectedTemplate}
+                  />
+                </div> */}
+                <div ref={previewRef} className="bg-white p-6 pb-16">
                   <ResumePreview
                     data={resumeData}
                     template={selectedTemplate}
@@ -1369,324 +1567,3 @@ export function ResumeBuilder() {
     </div>
   );
 }
-
-const DefaultIcon = Sparkles;
-
-const SkillsDisplay_2 = ({ skills }: { skills: Skill[] }) => {
-  const groupedSkills = skills.reduce(
-    (acc, skill) => {
-      const category = skill.category || "Technical";
-      if (!acc[category]) acc[category] = [];
-      acc[category].push(skill);
-      return acc;
-    },
-    {} as Record<string, Skill[]>,
-  );
-
-  const getLevelColor = (level: number) => {
-    if (level >= 4) return "bg-green-500";
-    if (level >= 3) return "bg-blue-500";
-    if (level >= 2) return "bg-yellow-500";
-    return "bg-gray-500";
-  };
-
-  const getLevelText = (level: number) => {
-    const levels = ["Learning", "Basic", "Proficient", "Advanced", "Expert"];
-    return levels[level - 1] || "Intermediate";
-  };
-
-  const topSkills = [...skills].sort((a, b) => b.level - a.level).slice(0, 3);
-
-  return (
-    <div className="space-y-6">
-      {/* Top Skills Highlight */}
-      {topSkills.length > 0 && (
-        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-4">
-          <h3 className="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
-            <Award className="w-4 h-4 text-blue-600" />
-            Core Competencies
-          </h3>
-          <div className="flex flex-wrap gap-3">
-            {topSkills.map((skill) => (
-              <div key={skill.id} className="flex items-center gap-2">
-                <div className="flex items-center gap-1">
-                  {[...Array(5)].map((_, i) => (
-                    <Star
-                      key={i}
-                      className={`w-3 h-3 ${
-                        i < skill.level
-                          ? "text-yellow-400 fill-yellow-400"
-                          : "text-gray-300"
-                      }`}
-                    />
-                  ))}
-                </div>
-                <span className="font-medium text-gray-800">{skill.name}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* Skills by Category */}
-      <div className="space-y-5">
-        {Object.entries(groupedSkills).map(([category, categorySkills]) => {
-          const Icon = categoryIcons[category] || DefaultIcon;
-
-          return (
-            <div key={category}>
-              <div className="flex items-center gap-2 mb-3">
-                <div className="p-1.5 bg-blue-100 rounded-lg">
-                  <Icon className="w-4 h-4 text-blue-600" />
-                </div>
-                <h3 className="font-semibold text-gray-800">{category}</h3>
-                <span className="text-xs text-gray-400">
-                  ({categorySkills.length})
-                </span>
-              </div>
-
-              <div className="grid gap-3">
-                {categorySkills.map((skill) => (
-                  <div key={skill.id} className="group">
-                    <div className="flex justify-between items-center mb-1">
-                      <div className="flex items-center gap-2">
-                        <span className="font-medium text-gray-700">
-                          {skill.name}
-                        </span>
-                        <span className="text-xs text-gray-400">
-                          {getLevelText(skill.level)}
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-1">
-                        {[...Array(5)].map((_, i) => (
-                          <Star
-                            key={i}
-                            className={`w-3 h-3 ${
-                              i < skill.level
-                                ? "text-yellow-400 fill-yellow-400"
-                                : "text-gray-300"
-                            }`}
-                          />
-                        ))}
-                      </div>
-                    </div>
-                    <div className="w-full bg-gray-200 rounded-full h-2">
-                      <div
-                        className={`h-2 rounded-full transition-all duration-500 ${getLevelColor(skill.level)}`}
-                        style={{ width: `${(skill.level / 5) * 100}%` }}
-                      />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          );
-        })}
-      </div>
-
-      {/* Skills Summary Stats */}
-      {skills.length > 5 && (
-        <div className="pt-4 mt-2 border-t border-gray-200">
-          <div className="flex justify-between text-sm text-gray-600">
-            <div className="flex items-center gap-2">
-              <TrendingUp className="w-4 h-4 text-green-500" />
-              <span>Total Skills: {skills.length}</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Award className="w-4 h-4 text-purple-500" />
-              <span>
-                Avg. Proficiency:{" "}
-                {(
-                  skills.reduce((sum, s) => sum + s.level, 0) / skills.length
-                ).toFixed(1)}
-                /5
-              </span>
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-};
-
-const SkillsDisplay = ({ skills }: { skills: Skill[] }) => {
-  // Group skills by category
-  const groupedSkills = skills.reduce(
-    (acc, skill) => {
-      const category = skill.category || "Technical";
-      if (!acc[category]) acc[category] = [];
-      acc[category].push(skill);
-      return acc;
-    },
-    {} as Record<string, Skill[]>,
-  );
-
-  // Calculate skill level distribution
-  const getLevelColor = (level: number) => {
-    if (level >= 4) return "bg-green-500";
-    if (level >= 3) return "bg-blue-500";
-    if (level >= 2) return "bg-yellow-500";
-    return "bg-gray-500";
-  };
-
-  const getLevelText = (level: number) => {
-    const levels = ["Learning", "Basic", "Proficient", "Advanced", "Expert"];
-    return levels[level - 1] || "Intermediate";
-  };
-
-  // Get top skills (highest level)
-  const topSkills = [...skills].sort((a, b) => b.level - a.level).slice(0, 3);
-
-  return (
-    <div className="space-y-6">
-      {/* Top Skills Highlight */}
-      {topSkills.length > 0 && (
-        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-4">
-          <h3 className="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
-            <Award className="w-4 h-4 text-blue-600" />
-            Core Competencies
-          </h3>
-          <div className="flex flex-wrap gap-3">
-            {topSkills.map((skill) => (
-              <div key={skill.id} className="flex items-center gap-2">
-                <div className="flex items-center gap-1">
-                  {[...Array(5)].map((_, i) => (
-                    <Star
-                      key={i}
-                      className={`w-3 h-3 ${
-                        i < skill.level
-                          ? "text-yellow-400 fill-yellow-400"
-                          : "text-gray-300"
-                      }`}
-                    />
-                  ))}
-                </div>
-                <span className="font-medium text-gray-800">{skill.name}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* Skills by Category */}
-      <div className="space-y-5">
-        {Object.entries(groupedSkills).map(([category, categorySkills]) => {
-          const Icon = categoryIcons[category] || DefaultIcon;
-
-          return (
-            <div key={category}>
-              <div className="flex items-center gap-2 mb-3">
-                <div className="p-1.5 bg-blue-100 rounded-lg">
-                  <Icon className="w-4 h-4 text-blue-600" />
-                </div>
-                <h3 className="font-semibold text-gray-800">{category}</h3>
-                <span className="text-xs text-gray-400">
-                  ({categorySkills.length})
-                </span>
-              </div>
-
-              <div className="grid gap-3">
-                {categorySkills.map((skill) => (
-                  <div key={skill.id} className="group">
-                    <div className="flex justify-between items-center mb-1">
-                      <div className="flex items-center gap-2">
-                        <span className="font-medium text-gray-700">
-                          {skill.name}
-                        </span>
-                        <span className="text-xs text-gray-400">
-                          {getLevelText(skill.level)}
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-1">
-                        {[...Array(5)].map((_, i) => (
-                          <Star
-                            key={i}
-                            className={`w-3 h-3 ${
-                              i < skill.level
-                                ? "text-yellow-400 fill-yellow-400"
-                                : "text-gray-300"
-                            }`}
-                          />
-                        ))}
-                      </div>
-                    </div>
-                    <div className="w-full bg-gray-200 rounded-full h-2">
-                      <div
-                        className={`h-2 rounded-full transition-all duration-500 ${getLevelColor(skill.level)}`}
-                        style={{ width: `${(skill.level / 5) * 100}%` }}
-                      />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          );
-        })}
-      </div>
-
-      {/* Skills Summary Stats */}
-      {skills.length > 5 && (
-        <div className="pt-4 mt-2 border-t border-gray-200">
-          <div className="flex justify-between text-sm text-gray-600">
-            <div className="flex items-center gap-2">
-              <TrendingUp className="w-4 h-4 text-green-500" />
-              <span>Total Skills: {skills.length}</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Award className="w-4 h-4 text-purple-500" />
-              <span>
-                Avg. Proficiency:{" "}
-                {(
-                  skills.reduce((sum, s) => sum + s.level, 0) / skills.length
-                ).toFixed(1)}
-                /5
-              </span>
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-};
-
-const CompactSkillsDisplay = ({ skills }: { skills: Skill[] }) => {
-  const groupedSkills = skills.reduce(
-    (acc, skill) => {
-      const category = skill.category || "Technical";
-      if (!acc[category]) acc[category] = [];
-      acc[category].push(skill);
-      return acc;
-    },
-    {} as Record<string, Skill[]>,
-  );
-
-  return (
-    <div className="space-y-4">
-      {Object.entries(groupedSkills).map(([category, categorySkills]) => (
-        <div key={category}>
-          <h3 className="text-sm font-semibold text-gray-700 mb-2">
-            {category}
-          </h3>
-          <div className="flex flex-wrap gap-2">
-            {categorySkills.map((skill) => (
-              <div
-                key={skill.id}
-                className="group relative inline-flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 rounded-full hover:bg-blue-100 transition-colors"
-              >
-                <span className="text-sm text-gray-700">{skill.name}</span>
-                <div className="flex items-center gap-0.5">
-                  {[...Array(skill.level)].map((_, i) => (
-                    <Star
-                      key={i}
-                      className="w-2.5 h-2.5 text-yellow-500 fill-yellow-500"
-                    />
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-};
