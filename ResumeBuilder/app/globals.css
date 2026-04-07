@@ -121,3 +121,39 @@
   break-inside: avoid;
   page-break-inside: avoid;
 }
+
+.print\:hidden {
+  display: block;
+}
+
+@media print {
+  /* Hide everything */
+  body * {
+    visibility: hidden;
+    margin: 0;
+  }
+
+  @page {
+    margin: 0;
+  }
+
+  /* Show only resume */
+  .resume-print-area,
+  .resume-print-area * {
+    visibility: visible;
+  }
+
+  /* Move resume to top-left */
+  .resume-print-area {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
+  .page-break {
+    page-break-before: always;
+  }
+  .print\:hidden {
+    display: none;
+  }
+}

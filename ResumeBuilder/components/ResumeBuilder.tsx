@@ -1,6 +1,5 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
 import {
   Certificate,
   Education,
@@ -24,21 +23,19 @@ import {
   Database,
   Download,
   Edit,
+  Edit3,
   Eye,
   FileText,
   GitBranch,
   GraduationCap,
   Languages,
   Layout,
-  Linkedin,
   Printer,
   Redo,
   Settings,
   Shield,
   Smartphone,
   Sparkles,
-  Star,
-  TrendingUp,
   Undo,
   Upload,
   User,
@@ -46,7 +43,9 @@ import {
 } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ResumeAnalyzer } from "./ResumeAnalyzer";
-import { HeaderStyle, HeaderStyleSelector, ResumeHeader } from "./ResumeHeader";
+import { HeaderStyle } from "./ResumeHeader";
+import { ResumePreview } from "./ResumePreview";
+import { ResumePreviewImproved } from "./ResumePreviewImproved";
 import { SkillsForm as SkillsForms } from "./SkillsForm";
 import { CertificatesForm } from "./forms/CertificatesForm";
 import { EducationForm } from "./forms/EducationForm";
@@ -55,25 +54,8 @@ import { LanguagesForm } from "./forms/LanguagesForm";
 import { PersonalInfoForm } from "./forms/PersonalInfoForm";
 import { ProjectsForm } from "./forms/ProjectsForm";
 import { SkillsForm } from "./forms/SkillsForm";
-import { Card } from "./ui/card";
-
-// Category icons mapping
-const categoryIcons: Record<string, any> = {
-  "Programming Languages": Code,
-  "Frontend Development": Layout,
-  "Backend Development": Code,
-  "Database & Storage": Database,
-  "Cloud & DevOps": Cloud,
-  "Mobile Development": Smartphone,
-  "AI & Machine Learning": Brain,
-  Security: Shield,
-  "Tools & Platforms": Settings,
-  "Soft Skills": Users,
-  Methodologies: GitBranch,
-  Design: Layout,
-  Technical: Code,
-  Other: Sparkles,
-};
+import { PDFExporter } from "./PDFExporter";
+import { downloadPDF } from "@/lib/pdf-generator";
 
 const initialData: ResumeData = {
   personalInfo: {
@@ -119,448 +101,40 @@ const templates = {
   },
 };
 
-const ResumePreview = ({
-  data,
-  template,
-}: {
-  data: ResumeData;
-  template: keyof typeof templates;
-}) => {
-  const style = templates[template];
-  const [skillsViewMode, setSkillsViewMode] = useState<"detailed" | "compact">(
-    "detailed",
-  );
-
-  const skills = data.skills;
-  const [resumeData, setResumeData] = useState<ResumeData | null>(null);
-  const [isExporting, setIsExporting] = useState(false);
-  const [exportSuccess, setExportSuccess] = useState(false);
-  const [headerStyle, setHeaderStyle] = useState<HeaderStyle>("side-by-side");
-  const [showStyleSelector, setShowStyleSelector] = useState(false);
-  const previewRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    // Load data from localStorage
-    const saved = localStorage.getItem("resumeData");
-    if (saved) {
-      setResumeData(JSON.parse(saved));
-    }
-  }, []);
-
-  useEffect(() => {
-    // Load data from localStorage
-    const saved = localStorage.getItem("resumeData");
-    if (saved) {
-      setResumeData(JSON.parse(saved));
-    }
-
-    // Load saved header preference
-    const savedHeaderStyle = localStorage.getItem("resumeHeaderStyle");
-    if (savedHeaderStyle) {
-      setHeaderStyle(savedHeaderStyle as HeaderStyle);
-    }
-
-    // Listen for storage changes
-    const handleStorageChange = () => {
-      const updated = localStorage.getItem("resumeData");
-      if (updated) {
-        setResumeData(JSON.parse(updated));
-      }
-    };
-
-    window.addEventListener("storage", handleStorageChange);
-    return () => window.removeEventListener("storage", handleStorageChange);
-  }, []);
-
-  // Save header preference
-  const handleHeaderStyleChange = (style: HeaderStyle) => {
-    setHeaderStyle(style);
-    localStorage.setItem("resumeHeaderStyle", style);
-  };
-
-  const exportToJSON = () => {
-    if (!resumeData) return;
-    const dataStr = JSON.stringify(resumeData, null, 2);
-    const blob = new Blob([dataStr], { type: "application/json" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `resume-${resumeData.personalInfo.fullName || "data"}.json`;
-    a.click();
-    URL.revokeObjectURL(url);
-    setExportSuccess(true);
-    setTimeout(() => setExportSuccess(false), 3000);
-  };
-
-  const handlePrint = () => {
-    window.print();
-  };
-
-  // Group skills by category
-  const groupedSkills = skills.reduce(
-    (acc, skill) => {
-      const category = skill.category || "Technical";
-      if (!acc[category]) acc[category] = [];
-      acc[category].push(skill);
-      return acc;
-    },
-    {} as Record<string, Skill[]>,
-  );
-
-  // Calculate skill level distribution
-  const getLevelColor = (level: number) => {
-    if (level >= 4) return "bg-green-500";
-    if (level >= 3) return "bg-blue-500";
-    if (level >= 2) return "bg-yellow-500";
-    return "bg-gray-500";
-  };
-
-  const getLevelText = (level: number) => {
-    const levels = ["Learning", "Basic", "Proficient", "Advanced", "Expert"];
-    return levels[level - 1] || "Intermediate";
-  };
-
-  // Get top skills (highest level)
-  const topSkills = [...skills].sort((a, b) => b.level - a.level).slice(0, 3);
-
-  return (
-    <div
-      className="bg-white rounded-lg shadow-xl overflow-hidden"
-      style={{ fontFamily: style.font }}
-    >
-      <div className="p-8">
-        {/* Header */}
-        <div
-          className="text-center border-b-2 pb-6 mb-6"
-          style={{ borderColor: style.primaryColor }}
-        >
-          <h1
-            className="text-3xl font-bold"
-            style={{ color: style.primaryColor }}
-          >
-            {data.personalInfo.fullName || "Your Name"}
-          </h1>
-          <div className="flex flex-wrap justify-center gap-4 mt-2 text-sm text-gray-600">
-            {data.personalInfo.email && <span>{data.personalInfo.email}</span>}
-            {data.personalInfo.phone && <span>{data.personalInfo.phone}</span>}
-            {data.personalInfo.location && (
-              <span>{data.personalInfo.location}</span>
-            )}
-          </div>
-          <div className="flex flex-wrap justify-center gap-3 mt-2 text-xs">
-            {data.personalInfo.website && (
-              <a
-                href={data.personalInfo.website}
-                className="text-blue-600 hover:underline"
-              >
-                {/* {data.personalInfo.website} */}
-                Portfolio
-              </a>
-            )}
-            {data.personalInfo.linkedin && (
-              <a
-                href={data.personalInfo.linkedin}
-                className="text-blue-600 hover:underline flex items-center gap-1"
-              >
-                <Linkedin className="w-4 h-4 inline-block mr-1 text-gray-400" />
-                LinkedIn
-              </a>
-            )}
-            {data.personalInfo.github && (
-              <a
-                href={data.personalInfo.github}
-                className="text-blue-600 hover:underline"
-              >
-                GitHub
-              </a>
-            )}
-          </div>
-        </div>
-
-        {/* {showStyleSelector && ( */}
-        <Card className="p-4">
-          <HeaderStyleSelector
-            selectedStyle={headerStyle}
-            onStyleChange={handleHeaderStyleChange}
-          />
-        </Card>
-        {/* )} */}
-
-        <ResumeHeader
-          data={data.personalInfo}
-          style={headerStyle}
-          // primaryColor="#3b82f6"
-          primaryColor={style.primaryColor}
-        />
-
-        {/* Summary */}
-        {data.personalInfo.summary && (
-          <div className="mb-6">
-            <h2
-              className="text-lg font-semibold  pb-2"
-              style={{ borderColor: style.secondaryColor }}
-            >
-              Professional Summary
-            </h2>
-            <Separator className="mb-4" />
-            <p className="text-gray-700 text-sm leading-relaxed">
-              {data.personalInfo.summary}
-            </p>
-          </div>
-        )}
-
-        {/* Experience */}
-        {data.experience.length > 0 && (
-          <div className="mb-6">
-            <h2
-              className="text-lg font-semibold pb-2"
-              style={{ borderColor: style.secondaryColor }}
-            >
-              Work Experience
-            </h2>
-            <Separator className="mb-4" />
-            {data.experience.map((exp) => (
-              <div key={exp.id} className="mb-4">
-                <div className="flex justify-between items-start">
-                  <div>
-                    <h3
-                      className="font-semibold"
-                      style={{ color: style.primaryColor }}
-                    >
-                      {exp.position}
-                    </h3>
-                    <p className="font-medium text-gray-700">
-                      {exp.company} -
-                      {exp.location && (
-                        <span className="text-sm pl-1 text-gray-500 mb-2">
-                          {exp.location} (remote)
-                        </span>
-                      )}
-                    </p>
-                  </div>
-                  <div className="text-right text-sm text-gray-500">
-                    {exp.startDate} - {exp.current ? "Present" : exp.endDate}
-                  </div>
-                </div>
-
-                <ul className="list-disc list-inside space-y-1 mt-2">
-                  {exp.description.map((desc, idx) => (
-                    <li key={idx} className="text-sm text-gray-600">
-                      {desc}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        )}
-
-        {/* Education */}
-        {data.education.length > 0 && (
-          <div className="mb-6">
-            <h2
-              className="text-lg font-semibold mb-3 pb-1 border-b"
-              style={{ borderColor: style.secondaryColor }}
-            >
-              Education
-            </h2>
-            {data.education.map((edu) => (
-              <div key={edu.id} className="mb-4">
-                <div className="flex justify-between items-start">
-                  <div>
-                    <h3
-                      className="font-semibold"
-                      style={{ color: style.primaryColor }}
-                    >
-                      {edu.institution}
-                    </h3>
-                    <p className="text-gray-700">
-                      {edu.degree} in {edu.field}
-                    </p>
-                  </div>
-                  <div className="text-right text-sm text-gray-500">
-                    {edu.startDate} - {edu.current ? "Present" : edu.endDate}
-                  </div>
-                </div>
-                {edu.gpa && (
-                  <p className="text-sm text-gray-500 mt-1">GPA: {edu.gpa}</p>
-                )}
-              </div>
-            ))}
-          </div>
-        )}
-
-        {/* Skills */}
-        {data.skills.length > 0 && (
-          <div className="mb-6">
-            <h2
-              // className="text-lg font-semibold mb-3 pb-3 border-b border-gray-200"
-              className="text-lg font-semibold pb-2 "
-              style={{ borderColor: style.secondaryColor }}
-            >
-              Technical Skills
-            </h2>
-            <Separator className="mb-4" />
-            <div className="grid grid-cols-3 gap-x-14">
-              {Object.entries(groupedSkills).map(
-                ([category, categorySkills]) => {
-                  return (
-                    <div key={category}>
-                      <div>
-                        <div className="flex items-center gap-2 mb-3">
-                          <div className="p-1.5 bg-blue-100 rounded-lg">
-                            {/* <Icon className="w-4 h-4 text-blue-600" /> */}
-                            <Code className="w-4 h-4 text-blue-600" />
-                          </div>
-                          <h3
-                            className="font-medium "
-                            style={{ color: style.primaryColor }}
-                          >
-                            {category}
-                          </h3>
-                          <span className="text-xs text-gray-400">
-                            ({categorySkills.length})
-                          </span>
-                        </div>
-
-                        <div className="grid grid-cols-2 items-center gap-y-2">
-                          {skills.map((skill) => (
-                            <div key={skill.id}>
-                              <div className="flex justify-between text-[15px]">
-                                <div className="flex items-center gap-2">
-                                  <span className="font-medium text-gray-700">
-                                    {skill.name}
-                                  </span>
-                                  <span className="text-xs text-gray-400">
-                                    ({getLevelText(skill.level)})
-                                  </span>
-                                </div>
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  );
-                },
-              )}
-            </div>
-          </div>
-        )}
-
-        {/* Projects */}
-        {data.projects.length > 0 && (
-          <div className="mb-6">
-            <h2
-              className="text-lg font-semibold pb-2"
-              style={{ borderColor: style.secondaryColor }}
-            >
-              Projects
-            </h2>
-            <Separator className="mb-4" />
-            {data.projects.map((project) => (
-              <div key={project.id} className="mb-4">
-                <div className="flex justify-between items-start">
-                  <h3
-                    className="font-semibold"
-                    style={{ color: style.primaryColor }}
-                  >
-                    {project.name}
-                  </h3>
-                  <div className="text-sm text-gray-500">
-                    {project.startDate} - {project.endDate}
-                  </div>
-                </div>
-                <p className="text-sm text-gray-600 mt-1">
-                  {project.description}
-                </p>
-                <div className="flex flex-wrap gap-2 mt-2">
-                  {project.technologies.map((tech, idx) => (
-                    <span
-                      key={idx}
-                      className="text-xs px-2 py-1 rounded"
-                      style={{
-                        backgroundColor: `${style.primaryColor}20`,
-                        color: style.primaryColor,
-                      }}
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-                <div className="flex gap-3 mt-2 text-sm">
-                  {project.link && (
-                    <a
-                      href={project.link}
-                      className="text-blue-600 hover:underline"
-                    >
-                      Live Demo
-                    </a>
-                  )}
-                  {project.github && (
-                    <a
-                      href={project.github}
-                      className="text-blue-600 hover:underline"
-                    >
-                      GitHub
-                    </a>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-
-        {/* Certificates */}
-        {data.certificates.length > 0 && (
-          <div className="mb-6">
-            <h2
-              className="text-lg font-semibold mb-3 pb-1 border-b"
-              style={{ borderColor: style.secondaryColor }}
-            >
-              Certifications
-            </h2>
-            <div className="space-y-2">
-              {data.certificates.map((cert) => (
-                <div key={cert.id} className="flex justify-between items-start">
-                  <div>
-                    <p className="font-medium">{cert.name}</p>
-                    <p className="text-sm text-gray-600">{cert.issuer}</p>
-                  </div>
-                  <div className="text-right text-sm text-gray-500">
-                    {cert.date}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Languages */}
-        {data.languages.length > 0 && (
-          <div>
-            <h2
-              className="text-lg font-semibold mb-3 pb-1 border-b"
-              style={{ borderColor: style.secondaryColor }}
-            >
-              Languages
-            </h2>
-            <div className="flex flex-wrap gap-4">
-              {data.languages.map((lang) => (
-                <div key={lang.id}>
-                  <span className="font-medium">{lang.name}</span>
-                  <span className="text-gray-500 text-sm ml-2">
-                    ({lang.proficiency})
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-};
+const sections = [
+  {
+    id: "personal",
+    name: "Personal Info",
+    icon: User,
+    component: "personal",
+  },
+  {
+    id: "experience",
+    name: "Experience",
+    icon: Briefcase,
+    component: "experience",
+  },
+  {
+    id: "education",
+    name: "Education",
+    icon: GraduationCap,
+    component: "education",
+  },
+  { id: "skills", name: "Skills", icon: Code, component: "skills" },
+  { id: "projects", name: "Projects", icon: Award, component: "projects" },
+  {
+    id: "certificates",
+    name: "Certificates",
+    icon: FileText,
+    component: "certificates",
+  },
+  {
+    id: "languages",
+    name: "Languages",
+    icon: Languages,
+    component: "languages",
+  },
+];
 
 // Main Component
 export function ResumeBuilder() {
@@ -585,6 +159,7 @@ export function ResumeBuilder() {
   const [exportSuccess, setExportSuccess] = useState(false);
   const [headerStyle, setHeaderStyle] = useState<HeaderStyle>("side-by-side");
   const [showStyleSelector, setShowStyleSelector] = useState(false);
+  const resumeRef = useRef<HTMLDivElement>(null);
 
   // Load/Save to localStorage
   useEffect(() => {
@@ -911,254 +486,6 @@ export function ResumeBuilder() {
     }
   };
 
-  const exportToPDFd = async () => {
-    if (!previewRef.current) return;
-
-    setIsExporting(true);
-    try {
-      const element = previewRef.current;
-
-      // Capture the entire element as canvas
-      const canvas = await html2canvas(element, {
-        scale: 2,
-        backgroundColor: "#ffffff",
-        logging: false,
-        useCORS: true,
-        windowWidth: element.scrollWidth,
-        windowHeight: element.scrollHeight,
-      });
-
-      const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF({
-        orientation: "portrait",
-        unit: "mm",
-        format: "a4",
-      });
-
-      // A4 dimensions in mm
-      const pdfWidth = 210;
-      const pdfHeight = 297;
-
-      // Calculate image dimensions
-      const imgWidth = pdfWidth;
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
-
-      let heightLeft = imgHeight;
-      let position = 0;
-      let pageNumber = 1;
-
-      // Add first page
-      pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-      heightLeft -= pdfHeight;
-
-      // Add additional pages if needed
-      while (heightLeft > 0) {
-        position = heightLeft - imgHeight;
-        pdf.addPage();
-        pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-        heightLeft -= pdfHeight;
-        pageNumber++;
-      }
-
-      // Save the PDF
-      pdf.save(`resume-${resumeData?.personalInfo.fullName || "document"}.pdf`);
-      setExportSuccess(true);
-      setTimeout(() => setExportSuccess(false), 3000);
-    } catch (error) {
-      console.error("Error generating PDF:", error);
-    } finally {
-      setIsExporting(false);
-    }
-  };
-
-  const exportToPDFf = async () => {
-    if (!previewRef.current) return;
-
-    setIsExporting(true);
-
-    try {
-      const element = previewRef.current;
-
-      const canvas = await html2canvas(element, {
-        scale: 2,
-        backgroundColor: "#ffffff",
-        useCORS: true,
-        windowWidth: element.scrollWidth,
-        windowHeight: element.scrollHeight,
-      });
-
-      const imgData = canvas.toDataURL("image/png");
-
-      const pdf = new jsPDF({
-        orientation: "portrait",
-        unit: "mm",
-        format: "a4",
-      });
-
-      // A4 dimensions
-      const pdfWidth = 210;
-      const pdfHeight = 297;
-
-      // Add margins
-      const marginTop = 10;
-      const marginBottom = 15;
-      const marginLeft = 10;
-
-      const usableHeight = pdfHeight - marginTop - marginBottom;
-
-      const imgWidth = pdfWidth - marginLeft * 2;
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
-
-      let heightLeft = imgHeight;
-      let position = marginTop;
-
-      let pageNumber = 1;
-
-      // First page
-      pdf.addImage(imgData, "PNG", marginLeft, position, imgWidth, imgHeight);
-
-      // Add page number
-      pdf.setFontSize(10);
-      pdf.text(`Page ${pageNumber}`, pdfWidth / 2, pdfHeight - 5, {
-        align: "center",
-      });
-
-      heightLeft -= usableHeight;
-
-      // Additional pages
-      while (heightLeft > 0) {
-        position = marginTop - imgHeight + heightLeft;
-
-        pdf.addPage();
-
-        pdf.addImage(imgData, "PNG", marginLeft, position, imgWidth, imgHeight);
-
-        pageNumber++;
-
-        // Add page number
-        pdf.setFontSize(10);
-        pdf.text(`Page ${pageNumber}`, pdfWidth / 2, pdfHeight - 5, {
-          align: "center",
-        });
-
-        heightLeft -= usableHeight;
-      }
-
-      pdf.save(`resume-${resumeData?.personalInfo.fullName || "document"}.pdf`);
-
-      setExportSuccess(true);
-      setTimeout(() => setExportSuccess(false), 3000);
-    } catch (error) {
-      console.error("Error generating PDF:", error);
-    } finally {
-      setIsExporting(false);
-    }
-  };
-
-  const exportToPDfF = async () => {
-    if (!previewRef.current) return;
-
-    setIsExporting(true);
-    try {
-      const element = previewRef.current;
-
-      // Capture the entire element as canvas
-      const canvas = await html2canvas(element, {
-        scale: 2,
-        backgroundColor: "#ffffff",
-        logging: false,
-        useCORS: true,
-        windowWidth: element.scrollWidth,
-        windowHeight: element.scrollHeight,
-      });
-
-      const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF({
-        orientation: "portrait",
-        unit: "mm",
-        format: "a4",
-      });
-
-      // A4 dimensions in mm
-      const pdfWidth = 210;
-      const pdfHeight = 297;
-
-      // Margins (20mm top and bottom for better spacing)
-      const margin = 5;
-      const usableHeight = pdfHeight - margin * 2;
-
-      // Calculate image dimensions
-      const imgWidth = pdfWidth - margin * 2;
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
-
-      let heightLeft = imgHeight;
-      let currentPosition = 0;
-      let pageNumber = 1;
-
-      // Calculate total pages needed
-      const totalPages = Math.ceil(imgHeight / usableHeight);
-
-      // Add first page
-      pdf.addImage(
-        imgData,
-        "PNG",
-        margin,
-        margin - currentPosition,
-        imgWidth,
-        imgHeight,
-      );
-      heightLeft -= usableHeight;
-      currentPosition += usableHeight;
-
-      // Add page number to first page
-      pdf.setFontSize(10);
-      pdf.setTextColor(100, 100, 100);
-      pdf.text(
-        `Page ${pageNumber} of ${totalPages}`,
-        pdfWidth / 2,
-        pdfHeight - 10,
-        { align: "center" },
-      );
-
-      // Add additional pages if needed
-      while (heightLeft > 0) {
-        pdf.addPage();
-        pageNumber++;
-
-        // Add the next portion of the image
-        pdf.addImage(
-          imgData,
-          "PNG",
-          margin,
-          margin - currentPosition,
-          imgWidth,
-          imgHeight,
-        );
-        heightLeft -= usableHeight;
-        currentPosition += usableHeight;
-
-        // Add page number
-        pdf.setFontSize(10);
-        pdf.setTextColor(100, 100, 100);
-        pdf.text(
-          `Page ${pageNumber} of ${totalPages}`,
-          pdfWidth / 2,
-          pdfHeight - 10,
-          { align: "center" },
-        );
-      }
-
-      // Save the PDF
-      pdf.save(`resume-${resumeData?.personalInfo.fullName || "document"}.pdf`);
-      setExportSuccess(true);
-      setTimeout(() => setExportSuccess(false), 3000);
-    } catch (error) {
-      console.error("Error generating PDF:", error);
-    } finally {
-      setIsExporting(false);
-    }
-  };
-
   const exportToPDF = async () => {
     if (!previewRef.current) return;
 
@@ -1180,32 +507,62 @@ export function ResumeBuilder() {
       const pdfWidth = 210;
       const pdfHeight = 297;
 
-      const margin = 10;
+      const margin = 4;
+
+      // Custom padding/margin values
+      const firstPageBottomPadding = 10; // Extra space at bottom of first page
+      const followingPageTopPadding = 10; // Extra space at top of following pages
 
       const imgWidth = pdfWidth - margin * 2;
       const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
       let position = 0;
       let heightLeft = imgHeight;
-
       let pageNumber = 1;
 
-      const pageHeight = pdfHeight - margin * 2;
+      // Calculate available height per page with different margins for first and subsequent pages
+      let pageHeight = pdfHeight - margin * 2;
 
-      const totalPages = Math.ceil(imgHeight / pageHeight);
+      // Adjust first page height (subtract bottom padding)
+      const firstPageAvailableHeight = pageHeight - firstPageBottomPadding;
+      // Adjust subsequent pages height (subtract top padding)
+      const subsequentPageAvailableHeight =
+        pageHeight - followingPageTopPadding;
+
+      const totalPages = Math.ceil(
+        (imgHeight - firstPageBottomPadding) / subsequentPageAvailableHeight,
+      );
+
+      let isFirstPage = true;
+      let currentVerticalOffset = 0;
 
       while (heightLeft > 0) {
+        // Determine available height for current page
+        const currentPageAvailableHeight = isFirstPage
+          ? firstPageAvailableHeight
+          : subsequentPageAvailableHeight;
+
+        // Calculate vertical offset for this page
+        let verticalOffset = margin - position;
+
+        // Add top padding for following pages
+        if (!isFirstPage && followingPageTopPadding > 0) {
+          verticalOffset = verticalOffset + followingPageTopPadding;
+        }
+
         pdf.addImage(
           imgData,
           "PNG",
           margin,
-          margin - position,
+          verticalOffset,
           imgWidth,
           imgHeight,
+          undefined, // alias
+          undefined, // compression
+          isFirstPage ? 0 : currentVerticalOffset, // rotation parameter can be used differently
         );
 
         pdf.setFontSize(10);
-
         pdf.text(
           `Page ${pageNumber} of ${totalPages}`,
           pdfWidth / 2,
@@ -1213,9 +570,15 @@ export function ResumeBuilder() {
           { align: "center" },
         );
 
-        heightLeft -= pageHeight;
-        position += pageHeight;
+        heightLeft -= currentPageAvailableHeight;
+        position += currentPageAvailableHeight;
+
+        if (!isFirstPage) {
+          currentVerticalOffset += currentPageAvailableHeight;
+        }
+
         pageNumber++;
+        isFirstPage = false;
 
         if (heightLeft > 0) {
           pdf.addPage();
@@ -1230,65 +593,25 @@ export function ResumeBuilder() {
     }
   };
 
-  // Keyboard shortcuts
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.ctrlKey && e.key === "z") {
-        e.preventDefault();
-        undo();
-      }
-      if (e.ctrlKey && e.key === "y") {
-        e.preventDefault();
-        redo();
-      }
-      if (e.ctrlKey && e.key === "s") {
-        e.preventDefault();
-        exportData();
-      }
-      if (e.ctrlKey && e.key === "p") {
-        e.preventDefault();
-        exportToPDF();
-      }
-    };
+  const handleDownloadPDF = async () => {
+    if (!resumeRef.current) return;
+    console.log("Generating PDF...");
 
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [undo, redo]);
+    try {
+      await PDFExporter.exportToPDF(resumeRef.current, {
+        filename: `${resumeData?.personalInfo.fullName.replace(/\s+/g, "-").toLowerCase()}-resume.pdf`,
+        quality: 0.95,
+        scale: 2,
+      });
+    } catch (error) {
+      console.error("PDF generation failed:", error);
+      alert("Failed to generate PDF. Please try again.");
+    }
+  };
 
-  const sections = [
-    {
-      id: "personal",
-      name: "Personal Info",
-      icon: User,
-      component: "personal",
-    },
-    {
-      id: "experience",
-      name: "Experience",
-      icon: Briefcase,
-      component: "experience",
-    },
-    {
-      id: "education",
-      name: "Education",
-      icon: GraduationCap,
-      component: "education",
-    },
-    { id: "skills", name: "Skills", icon: Code, component: "skills" },
-    { id: "projects", name: "Projects", icon: Award, component: "projects" },
-    {
-      id: "certificates",
-      name: "Certificates",
-      icon: FileText,
-      component: "certificates",
-    },
-    {
-      id: "languages",
-      name: "Languages",
-      icon: Languages,
-      component: "languages",
-    },
-  ];
+  const handlePrint = () => {
+    window.print();
+  };
 
   const renderSection = () => {
     switch (activeSection) {
@@ -1377,193 +700,245 @@ export function ResumeBuilder() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-950 p-6">
-      <div className="max-w-7xl mx-auto space-y-6">
-        {/* Header */}
-        <div className="flex justify-between items-center">
-          <div>
-            <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              Resume Builder
-            </h1>
-            <p className="text-gray-600 dark:text-gray-400 mt-1">
-              Create your professional resume
-            </p>
-          </div>
+    <>
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-950 p-6">
+        <div className="max-w-7xl mx-auto space-y-6">
+          {/* ================= HEADER ================= */}
+          <div className="flex justify-between items-center flex-wrap gap-4">
+            <div>
+              <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                Resume Builder
+              </h1>
 
-          <div className="flex gap-2">
-            {/* Save Status */}
-            <div className="flex items-center mr-4">
-              {saveStatus === "saved" && (
-                <CheckCircle className="w-4 h-4 text-green-500" />
-              )}
-              {saveStatus === "saving" && (
-                <Sparkles className="w-4 h-4 text-yellow-500 animate-pulse" />
-              )}
-              {saveStatus === "error" && (
-                <AlertCircle className="w-4 h-4 text-red-500" />
-              )}
-              <span className="text-sm ml-2 capitalize">{saveStatus}</span>
+              <p className="text-gray-600 dark:text-gray-400 mt-1">
+                Create your professional resume
+              </p>
             </div>
 
-            <Button
-              onClick={undo}
-              disabled={historyIndex === 0}
-              variant="outline"
-              size="sm"
-            >
-              <Undo className="w-4 h-4" />
-            </Button>
-            <Button
-              onClick={redo}
-              disabled={historyIndex === history.length - 1}
-              variant="outline"
-              size="sm"
-            >
-              <Redo className="w-4 h-4" />
-            </Button>
-            <Button onClick={exportData} variant="outline" size="sm">
-              <Download className="w-4 h-4 mr-2" />
-              Export
-            </Button>
-            <label>
-              <input
-                type="file"
-                accept=".json"
-                onChange={importData}
-                className="hidden"
-              />
-              <Button variant="outline" size="sm" asChild>
-                <span>
-                  <Upload className="w-4 h-4 mr-2" />
-                  Import
-                </span>
-              </Button>
-            </label>
-          </div>
-        </div>
+            {/* RIGHT ACTIONS */}
+            <div className="flex flex-wrap items-center gap-2">
+              {/* Save Status */}
+              <div className="flex items-center mr-2">
+                {saveStatus === "saved" && (
+                  <CheckCircle className="w-4 h-4 text-green-500" />
+                )}
 
-        {/* Template Selector */}
-        <div className="flex gap-2 p-2 bg-white dark:bg-slate-800 rounded-lg shadow">
-          {Object.entries(templates).map(([key, template]) => (
-            <Button
-              key={key}
-              variant={selectedTemplate === key ? "default" : "ghost"}
-              onClick={() => setSelectedTemplate(key as keyof typeof templates)}
-              className="flex-1"
-            >
-              {template.name}
-            </Button>
-          ))}
-        </div>
+                {saveStatus === "saving" && (
+                  <Sparkles className="w-4 h-4 text-yellow-500 animate-pulse" />
+                )}
 
-        <div className="flex gap-2 mb-4">
-          <Button
-            variant={builderMode === "manual" ? "default" : "outline"}
-            onClick={() => setBuilderMode("manual")}
-            className="flex-1"
-          >
-            <Edit className="w-4 h-4 mr-2" />
-            Manual Builder
-          </Button>
-          <Button
-            variant={builderMode === "analyzer" ? "default" : "outline"}
-            onClick={() => setBuilderMode("analyzer")}
-            className="flex-1"
-          >
-            <Brain className="w-4 h-4 mr-2" />
-            AI Resume Analyzer
-          </Button>
-        </div>
+                {saveStatus === "error" && (
+                  <AlertCircle className="w-4 h-4 text-red-500" />
+                )}
 
-        {builderMode === "analyzer" ? (
-          <ResumeAnalyzer onImport={handleImportFromAnalyzer} />
-        ) : (
-          <>
-            <div className="flex gap-2">
-              {/* ... existing view mode buttons ... */}
-              <Button
-                variant={viewMode === "edit" ? "default" : "outline"}
-                onClick={() => setViewMode("edit")}
-                className="flex-1"
-              >
-                <Edit className="w-4 h-4 mr-2" />
-                Edit
-              </Button>
-              <Button
-                variant={viewMode === "preview" ? "default" : "outline"}
-                onClick={() => {
-                  setViewMode("preview");
-                  validatePersonalInfo();
-                }}
-                className="flex-1"
-              >
-                <Eye className="w-4 h-4 mr-2" />
-                Preview
-              </Button>
-            </div>
-            {/* Main Content */}
-            {viewMode === "edit" ? (
-              <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-                {/* Sidebar */}
-                <div className="lg:col-span-1">
-                  <div className="sticky top-8 space-y-2 bg-white dark:bg-slate-800 rounded-lg shadow p-4">
-                    <h2 className="text-lg font-semibold mb-4">
-                      Resume Sections
-                    </h2>
-                    {sections.map((section) => {
-                      const Icon = section.icon;
-                      return (
-                        <Button
-                          key={section.id}
-                          variant={
-                            activeSection === section.id ? "default" : "ghost"
-                          }
-                          className="w-full justify-start"
-                          onClick={() => setActiveSection(section.id)}
-                        >
-                          <Icon className="w-4 h-4 mr-2" />
-                          {section.name}
-                        </Button>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                {/* Form Area */}
-                <div className="lg:col-span-3">
-                  <div className="bg-white dark:bg-slate-800 rounded-lg shadow-lg p-6">
-                    {renderSection()}
-                  </div>
-                </div>
+                <span className="text-sm ml-2 capitalize">{saveStatus}</span>
               </div>
-            ) : (
-              <div className="space-y-4">
-                <div className="flex justify-end gap-2">
-                  <Button
-                    onClick={exportToPDF}
-                    className="flex items-center gap-2"
+
+              <Button
+                onClick={undo}
+                disabled={historyIndex === 0}
+                variant="outline"
+                size="sm"
+              >
+                <Undo className="w-4 h-4" />
+              </Button>
+
+              <Button
+                onClick={redo}
+                disabled={historyIndex === history.length - 1}
+                variant="outline"
+                size="sm"
+              >
+                <Redo className="w-4 h-4" />
+              </Button>
+
+              <Button onClick={exportData} variant="outline" size="sm">
+                <Download className="w-4 h-4 mr-2" />
+                Export
+              </Button>
+
+              <label>
+                <input
+                  type="file"
+                  accept=".json"
+                  onChange={importData}
+                  className="hidden"
+                />
+
+                <Button variant="outline" size="sm" asChild>
+                  <span>
+                    <Upload className="w-4 h-4 mr-2" />
+                    Import
+                  </span>
+                </Button>
+              </label>
+            </div>
+          </div>
+
+          {/* ================= TEMPLATE TABS ================= */}
+
+          <div className="flex border-b bg-white dark:bg-slate-800 rounded-lg overflow-hidden shadow">
+            {Object.entries(templates).map(([key, template]) => (
+              <Button
+                key={key}
+                variant="ghost"
+                onClick={() =>
+                  setSelectedTemplate(key as keyof typeof templates)
+                }
+                className={`flex-1 rounded-none h-10 border-b-2 ${
+                  selectedTemplate === key
+                    ? "border-purple-600 text-purple-600 bg-gray-50 dark:bg-slate-700"
+                    : "border-transparent"
+                }`}
+              >
+                {template.name}
+              </Button>
+            ))}
+          </div>
+
+          {/* ================= BUILDER MODE TABS ================= */}
+
+          <div className="flex border-b bg-white dark:bg-slate-800 rounded-lg overflow-hidden shadow">
+            <Button
+              variant="ghost"
+              onClick={() => setBuilderMode("manual")}
+              className={`flex-1 rounded-none h-10 border-b-2 ${
+                builderMode === "manual"
+                  ? "border-blue-600 text-blue-600 bg-gray-50 dark:bg-slate-700"
+                  : "border-transparent"
+              }`}
+            >
+              <Edit className="w-4 h-4 mr-2" />
+              Manual Builder
+            </Button>
+
+            <Button
+              variant="ghost"
+              onClick={() => setBuilderMode("analyzer")}
+              className={`flex-1 rounded-none h-10 border-b-2 ${
+                builderMode === "analyzer"
+                  ? "border-blue-600 text-blue-600 bg-gray-50 dark:bg-slate-700"
+                  : "border-transparent"
+              }`}
+            >
+              <Brain className="w-4 h-4 mr-2" />
+              AI Resume Analyzer
+            </Button>
+          </div>
+
+          {/* ================= MAIN MODE ================= */}
+
+          {builderMode === "analyzer" ? (
+            <ResumeAnalyzer onImport={handleImportFromAnalyzer} />
+          ) : (
+            <>
+              {/* ================= VIEW MODE TABS ================= */}
+
+              <div className="flex border-b bg-white dark:bg-slate-800 rounded-lg overflow-hidden shadow">
+                <Button
+                  variant="ghost"
+                  onClick={() => setViewMode("edit")}
+                  className={`flex-1 rounded-none h-10 border-b-2 ${
+                    viewMode === "edit"
+                      ? "border-blue-600 text-blue-600 bg-gray-50 dark:bg-slate-700"
+                      : "border-transparent"
+                  }`}
+                >
+                  <Edit3 className="w-4 h-4 mr-2" />
+                  Resume Editor
+                </Button>
+
+                <Button
+                  variant="ghost"
+                  onClick={() => {
+                    setViewMode("preview");
+                    validatePersonalInfo();
+                  }}
+                  className={`flex-1 rounded-none h-10 border-b-2 ${
+                    viewMode === "preview"
+                      ? "border-blue-600 text-blue-600 bg-gray-50 dark:bg-slate-700"
+                      : "border-transparent"
+                  }`}
+                >
+                  <Eye className="w-4 h-4 mr-2" />
+                  Preview
+                </Button>
+              </div>
+
+              {/* ================= CONTENT ================= */}
+
+              {viewMode === "edit" ? (
+                <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+                  {/* ================= SIDEBAR ================= */}
+
+                  <div className="lg:col-span-1">
+                    <div className="sticky top-8 space-y-1 bg-white dark:bg-slate-800 rounded-lg shadow p-3">
+                      <h2 className="text-lg font-semibold mb-3">
+                        Resume Sections
+                      </h2>
+
+                      {sections.map((section) => {
+                        const Icon = section.icon;
+
+                        return (
+                          <Button
+                            key={section.id}
+                            variant="ghost"
+                            onClick={() => setActiveSection(section.id)}
+                            className={`w-full justify-start h-10 ${
+                              activeSection === section.id
+                                ? "bg-blue-600 text-white"
+                                : "hover:bg-gray-100 dark:hover:bg-slate-700"
+                            }`}
+                          >
+                            <Icon className="w-4 h-4 mr-2" />
+
+                            {section.name}
+                          </Button>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  {/* ================= FORM AREA ================= */}
+
+                  <div className="lg:col-span-3">
+                    <div className="bg-white dark:bg-slate-800 rounded-lg shadow-lg p-6">
+                      {renderSection()}
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {/* Download PDF */}
+                  <div className="flex justify-end">
+                    <Button
+                      onClick={exportToPDF}
+                      // onClick={handlePrint}
+                      className="flex items-center gap-2"
+                    >
+                      <Printer className="w-4 h-4" />
+                      Download PDF ggg
+                    </Button>
+                  </div>
+
+                  {/* Resume Preview */}
+
+                  <div
+                    ref={previewRef}
+                    className="resume-print-area print:hidden"
                   >
-                    <Printer className="w-4 h-4" />
-                    Download PDF
-                  </Button>
+                    <ResumePreview
+                      data={resumeData}
+                      template={selectedTemplate}
+                    />
+                  </div>
                 </div>
-                {/* <div ref={previewRef}>
-                  <ResumePreview
-                    data={resumeData}
-                    template={selectedTemplate}
-                  />
-                </div> */}
-                <div ref={previewRef} className="bg-white p-6 pb-16">
-                  <ResumePreview
-                    data={resumeData}
-                    template={selectedTemplate}
-                  />
-                </div>
-              </div>
-            )}
-          </>
-        )}
+              )}
+            </>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 }

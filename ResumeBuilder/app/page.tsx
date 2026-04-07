@@ -1,184 +1,324 @@
+// "use client";
+
+// import { AtomIcon, Edit, FileText, Sparkles } from "lucide-react";
+
+// function Home() {
+//   return (
+//     <main className="bg-gradient-to-b from-white to-gray-50 min-h-screen">
+//       {/* HERO SECTION */}
+//       <section className="py-20 px-6 text-center max-w-5xl mx-auto">
+//         <h1 className="text-4xl md:text-6xl font-extrabold leading-tight">
+//           Create a Job-Winning Resume <br />
+//           <span className="text-primary">in Minutes</span>
+//         </h1>
+
+//         <p className="mt-6 text-gray-600 text-lg max-w-2xl mx-auto">
+//           Build professional resumes and cover letters with AI. Save time, stand
+//           out, and land more interviews — effortlessly.
+//         </p>
+
+//         <div className="mt-8 flex justify-center gap-4 flex-wrap">
+//           <a
+//             href="/dashboard"
+//             className="px-6 py-3 rounded-lg bg-primary text-white font-medium shadow hover:scale-105 transition"
+//           >
+//             Get Started Free
+//           </a>
+
+//           <a
+//             href="#features"
+//             className="px-6 py-3 rounded-lg border text-gray-700 hover:bg-gray-100 transition"
+//           >
+//             See Features
+//           </a>
+//         </div>
+//       </section>
+
+//       {/* FEATURES */}
+//       <section
+//         id="features"
+//         className="py-16 px-6 max-w-6xl mx-auto grid gap-8 md:grid-cols-3"
+//       >
+//         <div className="p-6 rounded-2xl bg-white shadow-sm border hover:shadow-md transition">
+//           <AtomIcon className="w-8 h-8 text-primary mb-4" />
+//           <h3 className="font-semibold text-lg">AI Resume Generator</h3>
+//           <p className="text-sm text-gray-600 mt-2">
+//             Instantly generate professional summaries, experience, and skills
+//             tailored to your role.
+//           </p>
+//         </div>
+
+//         <div className="p-6 rounded-2xl bg-white shadow-sm border hover:shadow-md transition">
+//           <Edit className="w-8 h-8 text-primary mb-4" />
+//           <h3 className="font-semibold text-lg">Smart Editor</h3>
+//           <p className="text-sm text-gray-600 mt-2">
+//             Easily edit and customize your resume with a clean and simple
+//             interface.
+//           </p>
+//         </div>
+
+//         <div className="p-6 rounded-2xl bg-white shadow-sm border hover:shadow-md transition">
+//           <FileText className="w-8 h-8 text-primary mb-4" />
+//           <h3 className="font-semibold text-lg">Cover Letters</h3>
+//           <p className="text-sm text-gray-600 mt-2">
+//             Create personalized cover letters in seconds to match your resume.
+//           </p>
+//         </div>
+//       </section>
+
+//       {/* HOW IT WORKS */}
+//       <section className="py-20 px-6 bg-white">
+//         <div className="max-w-5xl mx-auto text-center">
+//           <h2 className="text-3xl font-bold">How It Works</h2>
+//           <p className="text-gray-500 mt-2">
+//             Simple steps to build your perfect resume
+//           </p>
+
+//           <div className="grid md:grid-cols-3 gap-10 mt-12 text-left">
+//             <div>
+//               <span className="text-primary font-bold text-xl">01</span>
+//               <h3 className="font-semibold mt-2">Enter Your Details</h3>
+//               <p className="text-sm text-gray-600 mt-1">
+//                 Add your job title, skills, and experience.
+//               </p>
+//             </div>
+
+//             <div>
+//               <span className="text-primary font-bold text-xl">02</span>
+//               <h3 className="font-semibold mt-2">Generate with AI</h3>
+//               <p className="text-sm text-gray-600 mt-1">
+//                 Let AI create professional content for you instantly.
+//               </p>
+//             </div>
+
+//             <div>
+//               <span className="text-primary font-bold text-xl">03</span>
+//               <h3 className="font-semibold mt-2">Download & Apply</h3>
+//               <p className="text-sm text-gray-600 mt-1">
+//                 Export your resume and start applying to jobs.
+//               </p>
+//             </div>
+//           </div>
+//         </div>
+//       </section>
+
+//       {/* CTA */}
+//       <section className="py-20 px-6 text-center bg-gradient-to-r from-primary to-purple-600 text-white">
+//         <h2 className="text-3xl font-bold">Ready to Build Your Resume?</h2>
+
+//         <p className="mt-3 text-white/80">
+//           Start creating your resume and cover letter today — it's free.
+//         </p>
+
+//         <a
+//           href="/dashboard"
+//           className="inline-block mt-6 px-8 py-3 bg-white text-black rounded-lg font-medium hover:scale-105 transition"
+//         >
+//           Get Started Now
+//         </a>
+//       </section>
+//     </main>
+//   );
+// }
+
+// export default Home;
+
 "use client";
 
 import { useState } from "react";
-import { ResumeBuilder } from "@/components/ResumeBuilder";
-import { ResumePreview } from "@/components/ResumePreview";
-import { Button } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import {
-  Eye,
-  Edit3,
-  Sparkles,
-  FileText,
-  Download,
-  Brain,
-  Wand2,
-  ChevronRight,
-} from "lucide-react";
-import { motion } from "framer-motion";
+import { Sparkles, FileText, Copy } from "lucide-react";
 
 export default function Home() {
-  const [activeTab, setActiveTab] = useState("edit");
-  const [showWelcome, setShowWelcome] = useState(true);
+  const [role, setRole] = useState("");
+  const [generated, setGenerated] = useState("");
 
-  // Check if user has existing data
-  const hasExistingData =
-    typeof window !== "undefined" && localStorage.getItem("resumeData");
+  const handleGenerate = () => {
+    if (!role) return;
+
+    setGenerated(`
+      <h3><strong>${role}</strong></h3>
+      <p>Creative and results-driven ${role} with experience in building scalable solutions and delivering high-quality work.</p>
+      <ul>
+        <li>Strong problem-solving skills</li>
+        <li>Experience with modern tools</li>
+        <li>Ability to deliver results fast</li>
+      </ul>
+    `);
+  };
+
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(generated);
+  };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-slate-900 dark:via-slate-900 dark:to-blue-950">
-      {/* Animated Background */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
-        <div className="absolute top-40 left-1/2 w-80 h-80 bg-pink-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
-      </div>
+    <main className="min-h-screen bg-gradient-to-b from-white to-gray-50">
+      {/* HEADER */}
+      <header className="flex justify-between items-center px-6 py-4 max-w-6xl mx-auto">
+        <h1 className="font-bold text-xl">AI Resume Builder</h1>
 
-      <div className="container mx-auto px-4 py-8 relative z-10">
-        {/* Hero Section with Welcome Message */}
-        {showWelcome && !hasExistingData && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="mb-8"
+        <nav className="flex gap-6 text-sm">
+          <a href="#demo" className="hover:text-primary">
+            Demo
+          </a>
+          <a href="#preview" className="hover:text-primary">
+            Preview
+          </a>
+          <a
+            href="/dashboard"
+            className="bg-primary text-white px-4 py-2 rounded-lg"
           >
-            <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl shadow-xl overflow-hidden">
-              <div className="relative p-8 text-white">
-                <div className="absolute right-0 top-0 opacity-10">
-                  <Sparkles className="w-64 h-64" />
-                </div>
-                <div className="relative z-10">
-                  <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
-                    Resume Builder Pro
-                  </h1>
-                  <p className="text-lg md:text-xl mb-6 text-blue-100 max-w-2xl">
-                    Create stunning, ATS-friendly resumes with our intelligent
-                    builder. Get real-time feedback, AI suggestions, and
-                    professional templates.
-                  </p>
-                  <div className="flex flex-wrap gap-4">
-                    <Button
-                      onClick={() => setShowWelcome(false)}
-                      variant="secondary"
-                      className="bg-white text-blue-600 hover:bg-blue-50"
-                    >
-                      Start Building
-                      <ChevronRight className="w-4 h-4 ml-2" />
-                    </Button>
-                    <Button
-                      variant="outline"
-                      className="border-white text-white hover:bg-white/10"
-                      onClick={() => {
-                        setActiveTab("preview");
-                        setShowWelcome(false);
-                      }}
-                    >
-                      <Eye className="w-4 h-4 mr-2" />
-                      View Demo
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        )}
+            Get Started
+          </a>
+        </nav>
+      </header>
 
-        {/* Main Tabs Section */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.2 }}
-        >
-          <Tabs
-            value={activeTab}
-            onValueChange={setActiveTab}
-            className="w-full"
-          >
-            <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-lg rounded-xl shadow-lg p-2 mb-8">
-              <TabsList className="grid w-full grid-cols-2 gap-2 bg-transparent">
-                <TabsTrigger
-                  value="edit"
-                  className="flex items-center gap-2 data-[state=active]:bg-blue-600 data-[state=active]:text-white transition-all"
-                >
-                  <Edit3 className="w-4 h-4" />
-                  <span className="hidden sm:inline">Resume Editor</span>
-                  <span className="sm:hidden">Edit</span>
-                </TabsTrigger>
-                <TabsTrigger
-                  value="preview"
-                  className="flex items-center gap-2 data-[state=active]:bg-blue-600 data-[state=active]:text-white transition-all"
-                >
-                  <Eye className="w-4 h-4" />
-                  <span className="hidden sm:inline">Preview & Export</span>
-                  <span className="sm:hidden">Preview</span>
-                </TabsTrigger>
-              </TabsList>
-            </div>
+      {/* HERO */}
+      <section className="text-center py-16 px-6 max-w-4xl mx-auto">
+        <h1 className="text-4xl md:text-6xl font-extrabold">
+          Build Your Resume with <span className="text-primary">AI</span>
+        </h1>
 
-            <TabsContent value="edit" className="space-y-6 mt-0">
-              <ResumeBuilder />
-            </TabsContent>
+        <p className="mt-4 text-gray-600">
+          Generate resumes, cover letters, and content instantly.
+        </p>
+      </section>
 
-            <TabsContent value="preview" className="space-y-6 mt-0">
-              <ResumePreview />
-            </TabsContent>
-          </Tabs>
-        </motion.div>
-
-        {/* Footer */}
-        <motion.footer
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.4 }}
-          className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-800 text-center text-sm text-gray-500"
-        >
-          <div className="flex flex-wrap justify-center gap-6 mb-4">
-            <span className="flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-blue-500" />
-              AI-Powered Analysis
-            </span>
-            <span className="flex items-center gap-2">
-              <FileText className="w-4 h-4 text-green-500" />
-              ATS-Friendly Templates
-            </span>
-            <span className="flex items-center gap-2">
-              <Download className="w-4 h-4 text-purple-500" />
-              PDF Export
-            </span>
+      {/* AI DEMO */}
+      <section id="demo" className="py-12 px-6 max-w-4xl mx-auto">
+        <div className="bg-white p-6 rounded-2xl shadow border">
+          <div className="flex items-center gap-2 mb-4">
+            <Sparkles className="text-primary" />
+            <h2 className="font-semibold">Try AI Generator</h2>
           </div>
-          <p>
-            © 2024 Resume Builder Pro. Create your professional resume with
-            confidence.
-          </p>
-        </motion.footer>
-      </div>
 
-      {/* Add custom styles for animations */}
-      <style jsx global>{`
-        @keyframes blob {
-          0% {
-            transform: translate(0px, 0px) scale(1);
-          }
-          33% {
-            transform: translate(30px, -50px) scale(1.1);
-          }
-          66% {
-            transform: translate(-20px, 20px) scale(0.9);
-          }
-          100% {
-            transform: translate(0px, 0px) scale(1);
-          }
-        }
-        .animate-blob {
-          animation: blob 7s infinite;
-        }
-        .animation-delay-2000 {
-          animation-delay: 2s;
-        }
-        .animation-delay-4000 {
-          animation-delay: 4s;
-        }
-      `}</style>
-    </div>
+          <div className="flex gap-3">
+            <input
+              value={role}
+              onChange={(e) => setRole(e.target.value)}
+              placeholder="Enter job role (e.g. Software Engineer)"
+              className="flex-1 border rounded-lg px-4 py-2"
+            />
+
+            <button
+              onClick={handleGenerate}
+              className="bg-primary text-white px-4 py-2 rounded-lg"
+            >
+              Generate
+            </button>
+          </div>
+
+          {/* OUTPUT */}
+          {generated && (
+            <div className="mt-6 border rounded-lg p-4 bg-gray-50 relative">
+              <button
+                onClick={copyToClipboard}
+                className="absolute top-2 right-2 text-gray-500 hover:text-black"
+              >
+                <Copy size={16} />
+              </button>
+
+              <div
+                className="text-sm [&_ul]:list-disc [&_ul]:ml-5"
+                dangerouslySetInnerHTML={{ __html: generated }}
+              />
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* RESUME PREVIEW MOCKUP */}
+      <section
+        id="preview"
+        className="py-16 px-6 max-w-6xl mx-auto grid md:grid-cols-2 gap-10 items-center"
+      >
+        {/* LEFT TEXT */}
+        <div>
+          <h2 className="text-3xl font-bold">Live Resume Preview</h2>
+
+          <p className="mt-4 text-gray-600">
+            See your resume update instantly as you type. No guesswork. No
+            stress.
+          </p>
+
+          <ul className="mt-4 text-sm text-gray-600 space-y-2">
+            <li>✔ Real-time editing</li>
+            <li>✔ Clean modern templates</li>
+            <li>✔ Ready for download</li>
+          </ul>
+        </div>
+
+        {/* RIGHT MOCKUP */}
+        <div className="bg-white shadow-xl rounded-2xl p-6 border">
+          <div className="border-b pb-2 mb-3">
+            <h3 className="font-bold text-lg">John Doe</h3>
+            <p className="text-sm text-gray-500">Fullstack Developer</p>
+          </div>
+
+          <div className="text-sm text-gray-700 space-y-2">
+            <p>
+              Passionate developer experienced in building scalable web
+              applications and modern digital solutions.
+            </p>
+
+            <ul className="list-disc ml-5">
+              <li>React / Next.js</li>
+              <li>Node.js APIs</li>
+              <li>Database design</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* AI IMAGE / CONTENT MOCK */}
+      <section className="py-16 px-6 text-center bg-white">
+        <h2 className="text-3xl font-bold">More than just resumes</h2>
+
+        <p className="text-gray-500 mt-2">
+          Generate content, ideas, and even visuals with AI
+        </p>
+
+        <div className="mt-8 grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          <div className="p-6 border rounded-xl">
+            <FileText className="mb-3" />
+            <h3 className="font-semibold">AI Cover Letters</h3>
+            <p className="text-sm text-gray-600">
+              Tailored cover letters instantly
+            </p>
+          </div>
+
+          <div className="p-6 border rounded-xl">
+            <Sparkles className="mb-3" />
+            <h3 className="font-semibold">AI Content</h3>
+            <p className="text-sm text-gray-600">
+              Generate summaries & job descriptions
+            </p>
+          </div>
+
+          <div className="p-6 border rounded-xl">
+            <FileText className="mb-3" />
+            <h3 className="font-semibold">Export Ready</h3>
+            <p className="text-sm text-gray-600">
+              Download PDF or share instantly
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="py-16 text-center bg-primary text-white">
+        <h2 className="text-3xl font-bold">Start Building Today</h2>
+
+        <p className="mt-2 text-white/80">
+          Your next job starts with a better resume
+        </p>
+
+        <a
+          href="/dashboard"
+          className="inline-block mt-6 bg-white text-black px-6 py-3 rounded-lg font-medium"
+        >
+          Get Started Free
+        </a>
+      </section>
+    </main>
   );
 }

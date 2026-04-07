@@ -1,4 +1,5 @@
 "use client";
+import RichTextEditor from "@/app/test/TextEditor";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -122,14 +123,7 @@ export const PersonalInfoForm = ({
       </div>
     </div>
     <div>
-      <Label htmlFor="summary">Professional Summary</Label>
-      <Textarea
-        id="summary"
-        value={data.summary}
-        onChange={(e) => onUpdate("summary", e.target.value)}
-        placeholder="A brief summary of your professional background and key achievements..."
-        className="mt-1 min-h-[120px]"
-      />
+      <RichTextEditor data={data} onUpdate={onUpdate} />
     </div>
   </motion.div>
 );
