@@ -8,10 +8,11 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { useTheme } from "@/contexts/ThemeContext";
 
-import CaseStudyNav from "@/components/CaseStudyNav";
+import CaseStudyNav from "@/app/case-studies/CaseStudyNav";
 import { caseStudies } from "@/data/case-studies";
 import { artifacts } from "@/data/artifacts";
-import CaseStudiesIndex from "@/components/CaseStudyIndex";
+import CaseStudiesIndex from "./CaseStudyIndex";
+import Image from "next/image";
 
 export default function CaseStudyPage() {
   const router = useRouter();
@@ -134,12 +135,20 @@ export default function CaseStudyPage() {
             >
               <div className="aspect-video relative">
                 {/* Replace with actual image */}
-                <div
+                {/* <div
                   className="w-full h-full flex items-center justify-center"
                   style={{ backgroundColor: "#D46A4A20" }}
                 >
                   <span className="opacity-30">📸 Hero Image Placeholder</span>
-                </div>
+                </div> */}
+                <Image
+                  src={study.images.hero}
+                  alt={`Preview of ${study.title}`}
+                  width={200}
+                  height={200}
+                  unoptimized
+                  className="rounded-lg w-full h-full"
+                />
               </div>
             </div>
           </div>

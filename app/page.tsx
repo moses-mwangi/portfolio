@@ -182,6 +182,39 @@ export default function HomePage() {
           ))}
         </div>
 
+        <div className="mt-32 mb-32">
+          {/* Toolbelt - replaces skills section */}
+          <div className="mb-32">
+            <div className="text-center mb-8">
+              <h2 className="text-2xl font-light">The Toolbelt</h2>
+              <p className="opacity-50 text-sm">What I reach for most often</p>
+            </div>
+            <div className="flex flex-wrap justify-center gap-2">
+              {[
+                "Figma",
+                "React",
+                "TypeScript",
+                "Framer Motion",
+                "Tailwind",
+                "Node.js",
+                "Python",
+                "Adobe Suite",
+              ].map((tool) => (
+                <span
+                  key={tool}
+                  className="px-4 py-2 rounded-full text-sm"
+                  style={{
+                    backgroundColor: "var(--bg-secondary)",
+                    border: "1px solid var(--border-color)",
+                  }}
+                >
+                  {tool}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+
         {/* About Section */}
         <motion.div
           id="about"

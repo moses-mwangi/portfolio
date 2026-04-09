@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import ThemeToggle from "./ThemeToggle";
+import Image from "next/image";
 
 export default function Header() {
   const pathname = usePathname();
@@ -37,12 +38,19 @@ export default function Header() {
     >
       <div className="max-w-6xl mx-auto px-6 flex justify-between items-center">
         <Link href="/">
-          <motion.div
+          {/* <motion.div
             whileHover={{ scale: 1.02 }}
             className="text-xl font-light tracking-tighter cursor-pointer"
             style={{ color: "var(--text-primary)" }}
           >
             [TM]
+          </motion.div> */}
+          <motion.div
+            whileHover={{ scale: 1.02 }}
+            className="text-lg font-light tracking-tighter cursor-pointer"
+            style={{ color: "var(--text-primary)" }}
+          >
+            <Image src={`/triple-m-logo.svg`} alt="dd" width={60} height={60} />
           </motion.div>
         </Link>
 

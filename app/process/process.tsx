@@ -3,8 +3,8 @@ import Head from "next/head";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import ProcessTimeline from "@/components/ProcessTimeline";
-import ThinkingVisualization from "@/components/ThinkingVisualization";
+import ProcessTimeline from "@/app/process/ProcessTimeline";
+import ThinkingVisualization from "@/app/process/ThinkingVisualization";
 import { processData } from "@/data/process";
 import { useTheme } from "@/contexts/ThemeContext";
 

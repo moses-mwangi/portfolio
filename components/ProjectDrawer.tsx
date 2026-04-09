@@ -27,7 +27,7 @@ export default function ProjectDrawer({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 bg-black/50 z-50"
+            className="fixed inset-0 backdrop-blur-xs bg-black/50 z-50"
           />
 
           {/* Drawer */}

@@ -98,7 +98,7 @@ export default function ThemeToggle() {
         onClick={toggleTheme}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        className="relative group px-4 py-2 rounded-full text-sm font-mono tracking-wider transition-all duration-300"
+        className="relative group px-4 py-2 cursor-pointer rounded-full text-sm font-mono tracking-wider transition-all duration-300"
         style={{
           backgroundColor: "var(--bg-secondary)",
           border: "1px solid var(--border-color)",

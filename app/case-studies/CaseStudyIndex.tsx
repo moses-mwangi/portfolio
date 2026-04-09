@@ -1,24 +1,15 @@
-"use client";
-
 import React from "react";
 import Head from "next/head";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { caseStudies } from "@/data/case-studies";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import { caseStudies } from "@/data/case-studies";
+import Image from "next/image";
 
 export default function CaseStudiesIndex() {
   return (
     <>
-      <Head>
-        <title>Case Studies — Deep Dives | Living Archive</title>
-        <meta
-          name="description"
-          content="In-depth explorations of my most significant projects — challenges, processes, and outcomes."
-        />
-      </Head>
-
       <div
         style={{
           backgroundColor: "var(--bg-primary)",
@@ -41,7 +32,10 @@ export default function CaseStudiesIndex() {
 
             <div className="space-y-16">
               {caseStudies.map((study, idx) => (
-                <Link key={study.slug} href={`/case-study/${study.slug}`}>
+                <Link
+                  key={study.slug}
+                  href={`/case-studies?slug=${study.slug}`}
+                >
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -77,7 +71,26 @@ export default function CaseStudiesIndex() {
                         className="md:w-48 h-32 rounded-lg flex items-center justify-center"
                         style={{ backgroundColor: "#D46A4A10" }}
                       >
-                        <span className="text-xs opacity-30">📸 Preview</span>
+                        {/* <span className="text-xs opacity-30">
+                          📸 Preview {study.images.hero}
+                          <Image
+                            src={study.images.hero}
+                            alt="hh"
+                            width={200}
+                            height={200}
+                          />
+                        </span> */}
+
+                        <span className="text-xs opacity-30">
+                          <Image
+                            src={study.images.final}
+                            alt={`Preview of ${study.title}`}
+                            width={200}
+                            height={200}
+                            unoptimized
+                            className="rounded-lg"
+                          />
+                        </span>
                       </div>
                     </div>
                   </motion.div>
