@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import Head from "next/head";
 import { motion, useScroll, useTransform } from "framer-motion";
-import Header from "../components/layout/Header";
-import Footer from "../components/layout/Footer";
-import ProcessTimeline from "../components/ProcessTimeline";
-import ThinkingVisualization from "../components/ThinkingVisualization";
-import { processData } from "../data/process";
-import { useTheme } from "../contexts/ThemeContext";
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
+import ProcessTimeline from "@/components/ProcessTimeline";
+import ThinkingVisualization from "@/components/ThinkingVisualization";
+import { processData } from "@/data/process";
+import { useTheme } from "@/contexts/ThemeContext";
 
 export default function ProcessPage() {
   const { resolvedTheme } = useTheme();

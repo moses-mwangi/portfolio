@@ -45,8 +45,7 @@ export default function HomePage() {
       className="min-h-screen transition-colors duration-1000"
       onMouseMove={(e) => setMousePosition({ x: e.clientX, y: e.clientY })}
     >
-      {/* <Header /> */}
-      {/* <UniqueNav /> */}
+      <Header />
 
       <AmbientCursor colors={colors} mousePosition={mousePosition} />
 
@@ -100,7 +99,7 @@ export default function HomePage() {
               </span>
             </h1>
             <p className="text-lg md:text-xl opacity-70 max-w-lg mt-6 leading-relaxed">
-              I'm <span className="font-medium">[Your Name]</span>. I build
+              I'm <span className="font-medium">Moses Mwangi</span>. I build
               digital artifacts, design systems that breathe, and occasionally
               write about silence in technology.
             </p>

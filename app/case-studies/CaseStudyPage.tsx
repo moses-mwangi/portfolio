@@ -64,7 +64,6 @@ export default function CaseStudyPage() {
         >
           <Header />
 
-          {/* Sticky Navigation */}
           <CaseStudyNav sections={study.process.map((p) => p.phase)} />
 
           {/* Hero Section */}

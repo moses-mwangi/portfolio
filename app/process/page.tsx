@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Head from "next/head";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Header from "@/components/layout/Header";
@@ -9,11 +9,23 @@ import ProcessTimeline from "@/components/ProcessTimeline";
 import ThinkingVisualization from "@/components/ThinkingVisualization";
 import { processData } from "@/data/process";
 import { useTheme } from "@/contexts/ThemeContext";
+import AmbientCursor from "@/components/AmbientCursor";
+
+const colors = {
+  paper: "#FDF8F0", // warm off-white like handmade paper
+  ink: "#1A1A1A", // soft black
+  // accent: "#D46A4A", // terracotta - warm and distinctive
+  accent: "#7ad44a", // terracotta - warm and distinctive
+  accentLight: "#F0D3C4", // blush
+  muted: "#8B7D6B", // warm gray
+  highlight: "#E8C468", // mustard seed
+};
 
 export default function ProcessPage() {
   const { resolvedTheme } = useTheme();
   const { scrollYProgress } = useScroll();
   const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   return (
     <>
@@ -23,8 +35,10 @@ export default function ProcessPage() {
           backgroundColor: "var(--bg-primary)",
           color: "var(--text-primary)",
         }}
+        onMouseMove={(e) => setMousePosition({ x: e.clientX, y: e.clientY })}
       >
         <Header />
+        <AmbientCursor colors={colors} mousePosition={mousePosition} />
 
         <main className="pt-32 pb-20">
           {/* Hero Section */}
