@@ -309,7 +309,7 @@ const ResumePDF = ({ data }: { data: ResumeData }) => (
                       </Text>
                     ))}
                   </View>
-                  {project.highlights.map((highlight, i) => (
+                  {project?.highlights?.map((highlight, i) => (
                     <Text
                       key={i}
                       style={{ fontSize: 9, marginLeft: 10, marginTop: 2 }}
