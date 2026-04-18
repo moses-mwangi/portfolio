@@ -36,9 +36,9 @@ export default function ProjectDrawer({
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "spring", damping: 25, stiffness: 200 }}
-            className="fixed right-0 top-0 bottom-0 w-full max-w-2xl z-50 shadow-2xl overflow-y-auto"
+            className="fixed right-0 top-0 bg-gray-800 bottom-0 w-full max-w-2xl z-50 shadow-2xl overflow-y-auto"
             style={{
-              backgroundColor: isNight ? "var(--night-bg)" : "var(--paper)",
+              // backgroundColor: isNight ? "var(--night-bg)" : "var(--paper)",
               color: isNight ? "var(--night-text)" : "var(--ink)",
             }}
           >

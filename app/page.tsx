@@ -32,6 +32,18 @@ export default function HomePage() {
     else setTimeOfDay("day");
   }, []);
 
+  useEffect(() => {
+    if (activeProject) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [activeProject]);
+
   const showRandomArtifact = () => {
     const random = artifacts[Math.floor(Math.random() * artifacts.length)];
     setRandomArtifact(random);
@@ -42,7 +54,7 @@ export default function HomePage() {
 
   return (
     <div
-      className="min-h-screen transition-colors duration-1000"
+      className={`min-h-screen transition-colors duration-1000 overflow-hidden `}
       onMouseMove={(e) => setMousePosition({ x: e.clientX, y: e.clientY })}
     >
       <Header />
