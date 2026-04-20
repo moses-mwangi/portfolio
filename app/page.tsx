@@ -1,14 +1,13 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { artifacts, aboutData } from "@/data/artifacts";
-import { Artifact } from "@/types";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
 import AmbientCursor from "@/components/AmbientCursor";
-import UniqueNav from "@/components/UniqueNav";
+import Footer from "@/components/layout/Footer";
+import Header from "@/components/layout/Header";
 import ProjectDrawer from "@/components/ProjectDrawer";
+import { aboutData, artifacts } from "@/data/artifacts";
+import { Artifact } from "@/types";
+import { AnimatePresence, motion } from "framer-motion";
+import { useEffect, useState } from "react";
 
 const colors = {
   paper: "#FDF8F0", // warm off-white like handmade paper
